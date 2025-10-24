@@ -12,6 +12,7 @@
             --dot-color: #f5f5f5;
             --dot-color-active: #4285F4;
         }
+
         .container {
             max-width: 1000px;
             margin: 40px auto;
@@ -79,7 +80,7 @@
         <a href="contact.html">Contact</a>
         <a href="basket.html">Basket</a>
     </nav>
-    
+
 
     <div class="container" id="product-container">
         <p>Loading product...</p>
@@ -101,6 +102,7 @@
 
                 const container = document.getElementById('product-container');
                 container.innerHTML = `
+            ${!product.in_stock ? '<span class="out-of-stock-text">Out of Stock</span>' : ''}
             <div class="product-images">
                 <img id="product-image" src="${Array.isArray(product.image) ? product.image[0] : product.image}" alt="${product.name}">
                 <div class="dots" id="dots-container"></div>
@@ -155,6 +157,8 @@
                         updateSlideshow();
                     }, 3000);
                 }
+
+                
 
                 // Prevent clicking Add to Basket from doing anything extra
                 const button = container.querySelector('button');
