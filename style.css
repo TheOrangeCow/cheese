@@ -137,3 +137,21 @@ footer {
     margin-top: 40px;
     color: var(--footer-text-color);
 }
+
+
+.text-image {
+    display: flex;     
+    align-items: center; 
+    gap: 20px;
+}
+
+.text-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.text-image .text {
+    flex: 1;
+}
