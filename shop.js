@@ -17,7 +17,6 @@ async function loadProducts(container, options = { featuredOnly: false }) {
             // Make the entire box clickable
             productDiv.style.cursor = 'pointer';
             productDiv.addEventListener('click', () => {
-                // Navigate to product page, e.g., product.html?id=2
                 window.location.href = `product.html?id=${product.id}`;
             });
 
@@ -30,6 +29,14 @@ async function loadProducts(container, options = { featuredOnly: false }) {
                 <p><em>Category: ${product.category}</em></p>
                 <button ${!product.in_stock ? 'disabled' : ''}>Add to Basket</button>
             `;
+
+            // Prevent box click when button is clicked
+            const button = productDiv.querySelector('button');
+            button.addEventListener('click', (event) => {
+                event.stopPropagation();
+                // Add your basket logic here
+                console.log(`${product.name} added to basket`);
+            });
 
             container.appendChild(productDiv);
         });
