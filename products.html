@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <2
-    <title>Online Shop</title>
-    <link rel="stylesheet" href="style.css">
+    <title>All Products</title>
 </head>
-<body>
-    <header>
-        My Online Shop
-    </header>
 
+<body>
+    <header>My Online Shop</header>
     <nav>
         <a href="">Home</a>
         <a href="/about.html">About</a>
@@ -20,20 +17,23 @@
         <a href="/basket.html">Basket</a>
     </nav>
 
+
     <div class="container">
-        <h2>Featured Products</h2>
-        <div class="product-grid" id="home-products">
+        <h2>All Products</h2>
+        <div class="product-grid" id="all-products">
             
         </div>
     </div>
 
-    <footer>
-        © 2025 My Online Shop. All rights reserved.
-    </footer>
+
+    <footer>© 2025 My Online Shop. All rights reserved.</footer>
+
+
     <script src="shop.js"></script>
     <script>
-        const homeContainer = document.getElementById('home-products');
-        loadProducts(homeContainer, { featuredOnly: true });
+        const allContainer = document.getElementById('all-products');
+        loadProducts(allContainer, { featuredOnly: false });
     </script>
 </body>
+
 </html>
