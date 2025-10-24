@@ -14,6 +14,13 @@ async function loadProducts(container, options = { featuredOnly: false }) {
             productDiv.className = 'product';
             if (!product.in_stock) productDiv.classList.add('out-of-stock');
 
+            // Make the entire box clickable
+            productDiv.style.cursor = 'pointer';
+            productDiv.addEventListener('click', () => {
+                // Navigate to product page, e.g., product.html?id=2
+                window.location.href = `product.html?id=${product.id}`;
+            });
+
             productDiv.innerHTML = `
                 ${!product.in_stock ? '<span class="out-of-stock-text">Out of Stock</span>' : ''}
                 <img src="${product.image}" alt="${product.name}">
