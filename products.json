@@ -3,7 +3,13 @@
     "id": 1,
     "name": "Product 1",
     "price": 19.99,
-    "image": "https://theorangecow.github.io/cheese/images/productimg/image.png",
+    "image": [
+        "https://theorangecow.github.io/cheese/images/productimg/image.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image_copy.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image_copy.png"
+    ],
     "description": "Description for Product 1.",
     "category": "Category A",
     "in_stock": true,
@@ -13,7 +19,13 @@
     "id": 2,
     "name": "Product 2",
     "price": 29.99,
-    "image": "https://theorangecow.github.io/cheese/images/productimg/image.png",
+    "image": [
+        "https://theorangecow.github.io/cheese/images/productimg/image.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image_copy.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image_copy.png"
+    ],
     "description": "Description for Product 2.",
     "category": "Category B",
     "in_stock": true,
@@ -23,7 +35,13 @@
     "id": 3,
     "name": "Product 3",
     "price": 14.99,
-    "image": "https://theorangecow.github.io/cheese/images/productimg/image.png",
+    "image": [
+        "https://theorangecow.github.io/cheese/images/productimg/image.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image_copy.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image_copy.png"
+    ],
     "description": "Description for Product 3.",
     "category": "Category A",
     "in_stock": false,
@@ -33,7 +51,13 @@
     "id": 4,
     "name": "Product 4",
     "price": 39.99,
-    "image": "https://theorangecow.github.io/cheese/images/productimg/image.png",
+    "image": [
+        "https://theorangecow.github.io/cheese/images/productimg/image.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image_copy.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image_copy.png"
+    ],
     "description": "Description for Product 4.",
     "category": "Category C",
     "in_stock": true,
@@ -43,7 +67,13 @@
     "id": 5,
     "name": "Product 5",
     "price": 9.99,
-    "image": "https://theorangecow.github.io/cheese/images/productimg/image.png",
+    "image": [
+        "https://theorangecow.github.io/cheese/images/productimg/image.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image_copy.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image_copy.png"
+    ],
     "description": "Description for Product 5.",
     "category": "Category B",
     "in_stock": true,
@@ -53,7 +83,13 @@
     "id": 6,
     "name": "Product 6",
     "price": 24.99,
-    "image": "https://theorangecow.github.io/cheese/images/productimg/image.png",
+    "image": [
+        "https://theorangecow.github.io/cheese/images/productimg/image.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image_copy.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image.png",
+        "https://theorangecow.github.io/cheese/images/productimg/image_copy.png"
+    ],
     "description": "Description for Product 6.",
     "category": "Category C",
     "in_stock": false,

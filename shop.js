@@ -20,9 +20,12 @@ async function loadProducts(container, options = { featuredOnly: false }) {
                 window.location.href = `product.html?id=${product.id}`;
             });
 
+            // Use first image if product.image is an array, otherwise just the image string
+            const displayImage = Array.isArray(product.image) ? product.image[0] : product.image;
+
             productDiv.innerHTML = `
                 ${!product.in_stock ? '<span class="out-of-stock-text">Out of Stock</span>' : ''}
-                <img src="${product.image}" alt="${product.name}">
+                <img src="${displayImage}" alt="${product.name}">
                 <h3>${product.name}</h3>
                 <div class="price">£${product.price.toFixed(2)}</div>
                 <p>${product.description}</p>
