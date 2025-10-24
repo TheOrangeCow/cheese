@@ -101,6 +101,7 @@
                 if (!product) return document.getElementById('product-container').innerHTML = '<p>Product not found.</p>';
 
                 const container = document.getElementById('product-container');
+
                 container.innerHTML = `
             ${!product.in_stock ? '<span class="out-of-stock-text">Out of Stock</span>' : ''}
             <div class="product-images">
@@ -111,18 +112,18 @@
                 <h2>${product.name}</h2>
                 <div class="price">£${product.price.toFixed(2)}</div>
                 <p>${product.description}</p>
-                <p><em>Category: ${product.category}</em></p>
                 <button ${!product.in_stock ? 'disabled' : ''}>Add to Basket</button>
             </div>
+            <h3 style="margin-top:40px;">More Like This</h3>
+            <div class="more-products" id="more-products" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:20px;"></div>
         `;
 
+                // ------------------- Slideshow -------------------
                 const imageElement = document.getElementById('product-image');
                 const dotsContainer = document.getElementById('dots-container');
-
                 const images = Array.isArray(product.image) ? product.image : [product.image];
                 let currentIndex = 0;
 
-                // Create dots
                 images.forEach((_, idx) => {
                     const dot = document.createElement('span');
                     dot.classList.add('dot');
@@ -144,7 +145,6 @@
                     });
                 }
 
-                // Auto-slide every 3 seconds
                 let autoSlide = setInterval(() => {
                     currentIndex = (currentIndex + 1) % images.length;
                     updateSlideshow();
@@ -158,9 +158,47 @@
                     }, 3000);
                 }
 
-                
+                // ------------------- More Like This -------------------
+                const moreContainer = document.getElementById('more-products');
 
-                // Prevent clicking Add to Basket from doing anything extra
+                // Products in the same category, excluding current
+                let sameCategory = products.filter(p => p.category === product.category && p.id !== product.id);
+
+                // Shuffle function
+                function shuffleArray(array) {
+                    return array.sort(() => Math.random() - 0.5);
+                }
+
+                sameCategory = shuffleArray(sameCategory);
+
+                let moreProducts = sameCategory.slice(0, 6);
+
+                // If less than 6, fill with featured products (excluding current & already selected)
+                if (moreProducts.length < 6) {
+                    const remaining = 6 - moreProducts.length;
+                    const featured = products.filter(p => p.featured && p.id !== product.id && !moreProducts.includes(p));
+                    moreProducts = moreProducts.concat(shuffleArray(featured).slice(0, remaining));
+                }
+
+                moreProducts.forEach(p => {
+                    const div = document.createElement('div');
+                    div.className = 'product';
+                    div.style.cursor = 'pointer';
+                    div.addEventListener('click', () => {
+                        window.location.href = `product.html?id=${p.id}`;
+                    });
+
+                    const displayImage = Array.isArray(p.image) ? p.image[0] : p.image;
+
+                    div.innerHTML = `
+                <img src="${displayImage}" alt="${p.name}" style="width:100%; height:150px; object-fit:cover; border-radius:5px;">
+                <h4 style="margin:5px 0;">${p.name}</h4>
+                <div>£${p.price.toFixed(2)}</div>
+            `;
+                    moreContainer.appendChild(div);
+                });
+
+                // ------------------- Add to Basket -------------------
                 const button = container.querySelector('button');
                 button.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -175,6 +213,7 @@
 
         loadProduct();
     </script>
+
     <footer>
         © 2025 Cheese factory. All rights reserved.
     </footer>
