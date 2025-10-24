@@ -161,10 +161,10 @@
                 // ------------------- More Like This -------------------
                 const moreContainer = document.getElementById('more-products');
 
-                // Products in the same category, excluding current
+               
                 let sameCategory = products.filter(p => p.category === product.category && p.id !== product.id);
 
-                // Shuffle function
+                
                 function shuffleArray(array) {
                     return array.sort(() => Math.random() - 0.5);
                 }
@@ -173,7 +173,7 @@
 
                 let moreProducts = sameCategory.slice(0, 6);
 
-                // If less than 6, fill with featured products (excluding current & already selected)
+                
                 if (moreProducts.length < 6) {
                     const remaining = 6 - moreProducts.length;
                     const featured = products.filter(p => p.featured && p.id !== product.id && !moreProducts.includes(p));
