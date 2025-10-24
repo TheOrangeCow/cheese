@@ -29,7 +29,6 @@ async function loadProducts(container, options = { featuredOnly: false }) {
                 <h3>${product.name}</h3>
                 <div class="price">£${product.price.toFixed(2)}</div>
                 <p>${product.description}</p>
-                <p><em>Category: ${product.category}</em></p>
                 <button ${!product.in_stock ? 'disabled' : ''}>Add to Basket</button>
             `;
 
