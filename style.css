@@ -1,6 +1,4 @@
-/* ========================
-   Color Variables
-======================== */
+/* Change these to fit your color sceem */
 :root {
     --body-bg-color: #f5f5f5;
     --header-bg-color: #4285F4;
@@ -19,9 +17,7 @@
     --footer-text-color: #555;
 }
 
-/* ========================
-   Global Styles
-======================== */
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
