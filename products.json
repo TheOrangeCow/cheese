@@ -56,7 +56,8 @@
     "image": "https://via.placeholder.com/250",
     "description": "Description for Product 6.",
     "category": "Category C",
-    "in_stock": true,
+    "in_stock": false,
     "featured": false
   }
 ]
+
