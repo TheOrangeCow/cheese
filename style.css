@@ -70,6 +70,7 @@ nav a {
     text-align: center;
     border: 1px solid var(--product-border-color);
     transition: 0.3s;
+    position: relative;
 }
 
 .product:hover {
@@ -116,6 +117,20 @@ button:disabled {
 
 .out-of-stock {
     opacity: 0.5;
+}
+
+.out-of-stock-text {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 0, 0, 0.8);
+    color: white;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    z-index: 1;
 }
 
 footer {
