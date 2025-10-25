@@ -12,8 +12,9 @@
             --dot-color: #f5f5f5;
             --dot-color-active: #4285F4;
         }
+
         .product {
-            position: relative; 
+            position: relative;
         }
 
         .container {
@@ -90,6 +91,7 @@
     </div>
 
     <script>
+
         async function loadProduct() {
             const params = new URLSearchParams(window.location.search);
             const productId = parseInt(params.get('id'), 10);
@@ -106,20 +108,25 @@
                 const container = document.getElementById('product-container');
 
                 container.innerHTML = `
-            ${!product.in_stock ? '<span class="out-of-stock-text">Out of Stock</span>' : ''}
-            <div class="product-images">
-                <img id="product-image" src="${Array.isArray(product.image) ? product.image[0] : product.image}" alt="${product.name}">
-                <div class="dots" id="dots-container"></div>
-            </div>
-            <div class="product-details">
-                <h2>${product.name}</h2>
-                <div class="price">£${product.price.toFixed(2)}</div>
-                <p>${product.description}</p>
-                <button ${!product.in_stock ? 'disabled' : ''}>Add to Basket</button>
-            </div>
-            <h3 style="margin-top:40px;">More Like This</h3>
-            <div class="more-products" id="more-products" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:20px;"></div>
-        `;
+                    ${!product.in_stock ? '<span class="out-of-stock-text">Out of Stock</span>' : ''}
+                    <div class="product-images">
+                        <img id="product-image" src="${Array.isArray(product.image) ? product.image[0] : product.image}" alt="${product.name}">
+                        <div class="dots" id="dots-container"></div>
+                    </div>
+                    <div class="product-details">
+                        <h2>${product.name}</h2>
+                        <div class="price">£${product.price.toFixed(2)}</div>
+                        <p>${product.description}</p>
+                        <div class="quantity-box">
+                            <button id="decrease" class="qty-btn">−</button>
+                            <span id="quantity">1</span>
+                            <button id="increase" class="qty-btn">+</button>
+                        </div
+                        <button ${!product.in_stock ? 'disabled' : ''}>Add to Basket</button>
+                    </div>
+                    <h3 style="margin-top:40px;">More Like This</h3>
+                    <div class="more-products" id="more-products" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:20px;"></div>
+                `;
 
                 // ------------------- Slideshow -------------------
                 const imageElement = document.getElementById('product-image');
@@ -163,20 +170,15 @@
 
                 // ------------------- More Like This -------------------
                 const moreContainer = document.getElementById('more-products');
-
-               
                 let sameCategory = products.filter(p => p.category === product.category && p.id !== product.id);
 
-                
                 function shuffleArray(array) {
                     return array.sort(() => Math.random() - 0.5);
                 }
 
                 sameCategory = shuffleArray(sameCategory);
-
                 let moreProducts = sameCategory.slice(0, 6);
 
-                
                 if (moreProducts.length < 6) {
                     const remaining = 6 - moreProducts.length;
                     const featured = products.filter(p => p.featured && p.id !== product.id && !moreProducts.includes(p));
@@ -202,11 +204,48 @@
                 });
 
                 // ------------------- Add to Basket -------------------
+
+                
+                
+
+
+                
+
                 const button = container.querySelector('button');
+                const quantityDisplay = container.querySelector('#quantity');
+                let qty = 1;
+
+                container.querySelector('#increase').addEventListener('click', () => {
+                    qty++;
+                    quantityDisplay.textContent = qty;
+                });
+
+                container.querySelector('#decrease').addEventListener('click', () => {
+                    if (qty > 1) {
+                        qty--;
+                        quantityDisplay.textContent = qty;
+                    }
+                });
+
                 button.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    console.log(`${product.name} added to basket`);
+
+                
+
+                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                    const existing = cart.find(item => item.id === product.id);
+                    if (existing) {
+                        existing.quantity += qty;
+                    } else {
+                        cart.push({ id: product.id, quantity: qty });
+                    }
+
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    alert(`${qty} × ${product.name} added to basket!`);
                 });
+                
+
 
             } catch (error) {
                 console.error(error);
@@ -215,6 +254,8 @@
         }
 
         loadProduct();
+    </script>
+
     </script>
 
     <footer>
