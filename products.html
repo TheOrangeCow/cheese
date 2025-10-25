@@ -62,7 +62,7 @@
             const categories = [...new Set(allProducts.map(p => p.category))];
             categories.forEach(cat => {
                 const option = document.createElement('option');
-                option.value = cat;
+                option.value  = cat;
                 option.textContent = cat;
                 categorySelect.appendChild(option);
             });
