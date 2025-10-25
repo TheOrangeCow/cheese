@@ -1,16 +1,18 @@
-async function loadProducts(container, options = { featuredOnly: false }) {
+async function loadProducts(container, options = { featuredOnly: false, overrideProducts: null }) {
     const url = 'products.json';
     try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Failed to fetch products');
-        const products = await response.json();
+        let products = await (await fetch(url)).json();
 
-        const filtered = options.featuredOnly ? products.filter(p => p.featured) : products;
-        products = options.overrideProducts ? options.overrideProducts : (await (await fetch(url)).json());
+        // If overrideProducts is provided, use it
+        if (options.overrideProducts) {
+            products = options.overrideProducts;
+        } else if (options.featuredOnly) {
+            products = products.filter(p => p.featured);
+        }
 
         container.innerHTML = '';
 
-        filtered.forEach(product => {
+        products.forEach(product => {
             const productDiv = document.createElement('div');
             productDiv.className = 'product';
             if (!product.in_stock) productDiv.classList.add('out-of-stock');
@@ -21,7 +23,7 @@ async function loadProducts(container, options = { featuredOnly: false }) {
                 window.location.href = `product.html?id=${product.id}`;
             });
 
-            // Use first image if product.image is an array, otherwise just the image string
+            // Use first image if product.image is an array
             const displayImage = Array.isArray(product.image) ? product.image[0] : product.image;
 
             productDiv.innerHTML = `
@@ -37,7 +39,6 @@ async function loadProducts(container, options = { featuredOnly: false }) {
             const button = productDiv.querySelector('button');
             button.addEventListener('click', (event) => {
                 event.stopPropagation();
-                // Add your basket logic here
                 console.log(`${product.name} added to basket`);
             });
 
