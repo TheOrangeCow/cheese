@@ -39,12 +39,28 @@ async function loadProducts(container, options = { featuredOnly: false, override
                 <button ${!product.in_stock ? 'disabled' : ''}>Add to Basket</button>
             `;
 
-            // Prevent box click when button is clicked
             const button = productDiv.querySelector('button');
             button.addEventListener('click', (event) => {
-                event.stopPropagation();
+                event.stopPropagation(); // Prevent redirect
+
+                // Retrieve current cart from localStorage or start a new one
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                // Check if product already in cart
+                const existingItem = cart.find(item => item.id === product.id);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({ id: product.id, quantity: 1 });
+                }
+
+                // Save updated cart
+                localStorage.setItem('cart', JSON.stringify(cart));
+
                 console.log(`${product.name} added to basket`);
+                alert(`${product.name} added to basket!`);
             });
+
 
             container.appendChild(productDiv);
         });
