@@ -127,7 +127,7 @@
     <script>
 function loadBasket() {
     const basketBody = document.getElementById("basket-body");
-    const basket = JSON.parse(localStorage.getItem("basket") || "[]");
+    const basket = JSON.parse(localStorage.getItem("cart") || "[]");
 
     basketBody.innerHTML = "";
 
