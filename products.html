@@ -24,10 +24,16 @@
 
 
     <div class="container">
-        <h2>All Products</h2>
-        <div class="product-grid" id="all-products">
-            
+        <div class="filter-bar">
+            <input type="text" id="search-input" placeholder="Search products...">
+            <select id="category-filter">
+                <option value="all">All Categories</option>
+            </select>
         </div>
+        
+        <h2>All Products</h2>
+        <div class="product-grid" id="all-products"></div>
+        
     </div>
 
 
@@ -36,8 +42,51 @@
 
     <script src="shop.js"></script>
     <script>
-        const allContainer = document.getElementById('all-products');
-        loadProducts(allContainer, { featuredOnly: false });
+        
+        
+    </script>
+    <script>
+    const allContainer = document.getElementById('all-products');
+    const searchInput = document.getElementById('search-input');
+    const categorySelect = document.getElementById('category-filter');
+    loadProducts(allContainer, { featuredOnly: false });
+
+    let allProducts = [];
+
+    async function init() {
+        const url = 'products.json';
+        const response = await fetch(url);
+        allProducts = await response.json();
+
+        // Populate category dropdown
+        const categories = [...new Set(allProducts.map(p => p.category))];
+        categories.forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat;
+            option.textContent = cat;
+            categorySelect.appendChild(option);
+        });
+
+        applyFilters();
+    }
+
+    function applyFilters() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const selectedCategory = categorySelect.value;
+
+        const filtered = allProducts.filter(product => {
+            const matchesSearch = product.name.toLowerCase().includes(searchTerm);
+            const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
+            return matchesSearch && matchesCategory;
+        });
+
+        loadProducts(allContainer, { featuredOnly: false, overrideProducts: filtered });
+    }
+
+    searchInput.addEventListener('input', applyFilters);
+    categorySelect.addEventListener('change', applyFilters);
+
+    init();
     </script>
 </body>
 
