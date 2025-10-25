@@ -122,7 +122,7 @@
                             <span id="quantity">1</span>
                             <button id="increase" class="qty-btn">+</button>
                         </div>
-                        <button ${!product.in_stock ? 'disabled' : ''}>Add to Basket</button>
+                        <button id = "add-to-basket" ${!product.in_stock ? 'disabled' : ''}>Add to Basket</button>
                     </div>
                     <h3 style="margin-top:40px;">More Like This</h3>
                     <div class="more-products" id="more-products" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:20px;"></div>
@@ -206,7 +206,7 @@
                 // ------------------- Add to Basket -------------------
                 
 
-                const button = container.querySelector('button');
+                const button = container.querySelector('#add-to-basket');
                 const quantityDisplay = container.querySelector('#quantity');
                 let qty = 1;
 
