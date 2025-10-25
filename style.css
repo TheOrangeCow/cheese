@@ -66,6 +66,7 @@ nav a {
     text-align: center;
     border: 1px solid var(--product-border-color);
     transition: 0.3s;
+    max-width: 401.797px;
     position: relative;
 }
 
