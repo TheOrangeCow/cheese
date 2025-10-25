@@ -58,7 +58,6 @@
             const response = await fetch(url);
             allProducts = await response.json();
 
-            // Populate category dropdown
             const categories = [...new Set(allProducts.map(p => p.category))];
             categories.forEach(cat => {
                 const option = document.createElement('option');
