@@ -9,6 +9,10 @@ async function loadProducts(container, options = { featuredOnly: false, override
         } else if (options.featuredOnly) {
             products = products.filter(p => p.featured);
         }
+        if (products.length === 0) {
+            container.innerHTML = '<p style="text-align:center; font-size:18px; color:#555;">Sorry, no products found.</p>';
+            return;
+        }
 
         container.innerHTML = '';
 
