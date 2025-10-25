@@ -6,6 +6,7 @@ async function loadProducts(container, options = { featuredOnly: false }) {
         const products = await response.json();
 
         const filtered = options.featuredOnly ? products.filter(p => p.featured) : products;
+        products = options.overrideProducts ? options.overrideProducts : (await (await fetch(url)).json());
 
         container.innerHTML = '';
 
