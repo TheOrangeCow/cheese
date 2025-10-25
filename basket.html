@@ -1,0 +1,194 @@
+<!--Follow the in the page instructions to change this file-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Chenge the title (This is the tiltle that appers in tab)-->
+    <title>Cheese Factory</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="https://theorangecow.github.io/cheese/images/logo/logo.ico">
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f3f3f3;
+        margin: 0;
+        padding: 0;
+    }
+
+    header, footer {
+        text-align: center;
+        background: #4285F4;
+        color: white;
+        padding: 15px;
+        font-size: 20px;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 30px auto;
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        text-align: center;
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background: #f9f9f9;
+        font-weight: bold;
+        color: #333;
+    }
+
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    img {
+        width: 80px;
+        height: 80px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    .delete-btn {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 6px 12px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .delete-btn:hover {
+        background-color: #c0392b;
+    }
+
+    .empty {
+        text-align: center;
+        color: #777;
+        font-size: 18px;
+        padding: 40px;
+    }
+
+    td[contenteditable="true"] {
+        background-color: #fff3cd;
+        border-radius: 5px;
+    }
+</style>
+</head>
+<body>
+    <header>
+        <!--Chenge the title (This is at the top of the page)-->
+        Cheese factory
+    </header>
+
+    <nav>
+        <!--This is the nav bar under the title if you change something here you need to update it on every page-->
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="products.html">Products</a>
+        <a href="contact.html">Contact</a>
+        <a href="basket.html">Basket</a>
+    </nav>
+
+    <div class="container">
+    <table id="basket-table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody id="basket-body">
+            <tr><td colspan="4" class="empty">Loading your basket...</td></tr>
+        </tbody>
+    </table>
+</div>
+
+
+    <footer>
+        <!--Change this to your company name-->
+        © 2025 Cheese factory. All rights reserved.
+    </footer>
+    <script>
+function loadBasket() {
+    const basketBody = document.getElementById("basket-body");
+    const basket = JSON.parse(localStorage.getItem("basket") || "[]");
+
+    basketBody.innerHTML = "";
+
+    if (basket.length === 0) {
+        basketBody.innerHTML = '<tr><td colspan="4" class="empty">Your basket is empty.</td></tr>';
+        return;
+    }
+
+    basket.forEach((item, index) => {
+        const row = document.createElement("tr");
+
+        const img = document.createElement("td");
+        const imageEl = document.createElement("img");
+        imageEl.src = item.image;
+        img.appendChild(imageEl);
+
+        const name = document.createElement("td");
+        name.textContent = item.name;
+
+        const quantity = document.createElement("td");
+        quantity.textContent = item.quantity;
+        quantity.title = "Double-click to edit quantity";
+        quantity.addEventListener("dblclick", () => {
+            quantity.setAttribute("contenteditable", "true");
+            quantity.focus();
+        });
+        quantity.addEventListener("blur", () => {
+            quantity.removeAttribute("contenteditable");
+            let newVal = parseInt(quantity.textContent);
+            if (isNaN(newVal) || newVal < 1) {
+                quantity.textContent = item.quantity;
+                return;
+            }
+            basket[index].quantity = newVal;
+            localStorage.setItem("basket", JSON.stringify(basket));
+        });
+        quantity.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") quantity.blur();
+        });
+
+        const del = document.createElement("td");
+        const delBtn = document.createElement("button");
+        delBtn.className = "delete-btn";
+        delBtn.textContent = "Delete";
+        delBtn.addEventListener("click", () => {
+            basket.splice(index, 1);
+            localStorage.setItem("basket", JSON.stringify(basket));
+            loadBasket();
+        });
+        del.appendChild(delBtn);
+
+        row.appendChild(img);
+        row.appendChild(name);
+        row.appendChild(quantity);
+        row.appendChild(del);
+        basketBody.appendChild(row);
+    });
+}
+
+loadBasket();
+</script>
+
+</body>
+</html>
