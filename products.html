@@ -75,13 +75,16 @@
             const selectedCategory = categorySelect.value;
 
             const filtered = allProducts.filter(product => {
-                const matchesSearch = product.name.toLowerCase().includes(searchTerm);
+                const matchesSearch =
+                    product.name.toLowerCase().includes(searchTerm) ||
+                    product.description.toLowerCase().includes(searchTerm); // <-- added
                 const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
                 return matchesSearch && matchesCategory;
             });
 
             loadProducts(allContainer, { featuredOnly: false, overrideProducts: filtered });
         }
+
 
         searchInput.addEventListener('input', applyFilters);
         categorySelect.addEventListener('change', applyFilters);
