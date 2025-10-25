@@ -1,194 +1,189 @@
-<!--Follow the in the page instructions to change this file-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--Chenge the title (This is the tiltle that appers in tab)-->
-    <title>Cheese Factory</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/x-icon" href="https://theorangecow.github.io/cheese/images/logo/logo.ico">
-    <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Basket</title>
+<style>
     body {
         font-family: Arial, sans-serif;
-        background-color: #f3f3f3;
+        background: #fafafa;
         margin: 0;
         padding: 0;
     }
 
     header, footer {
-        text-align: center;
         background: #4285F4;
         color: white;
+        text-align: center;
         padding: 15px;
-        font-size: 20px;
+        font-size: 1.3em;
     }
 
     .container {
         max-width: 900px;
         margin: 30px auto;
         background: white;
-        border-radius: 8px;
+        border-radius: 10px;
         padding: 20px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
+    .product-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #eee;
+        padding: 10px 0;
     }
 
-    th, td {
-        text-align: center;
-        padding: 12px;
-        border-bottom: 1px solid #ddd;
+    .product-row:last-child {
+        border-bottom: none;
     }
 
-    th {
-        background: #f9f9f9;
-        font-weight: bold;
-        color: #333;
+    .product-info {
+        display: flex;
+        align-items: center;
+        gap: 20px;
     }
 
-    tr:hover {
-        background-color: #f5f5f5;
-    }
-
-    img {
-        width: 80px;
-        height: 80px;
+    .product-info img {
+        width: 70px;
+        height: 70px;
         border-radius: 8px;
         object-fit: cover;
     }
 
+    .product-name {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .quantity {
+        background: #f3f3f3;
+        border-radius: 20px;
+        padding: 6px 14px;
+        cursor: pointer;
+        min-width: 50px;
+        text-align: center;
+    }
+
+    .quantity.editing {
+        background: #fffbe0;
+        border: 1px solid #ccc;
+    }
+
     .delete-btn {
-        background-color: #e74c3c;
+        background: #ff4d4d;
         color: white;
         border: none;
-        border-radius: 5px;
-        padding: 6px 12px;
+        border-radius: 20px;
+        padding: 8px 14px;
         cursor: pointer;
-        transition: background 0.3s;
+        transition: 0.2s;
     }
 
     .delete-btn:hover {
-        background-color: #c0392b;
+        background: #e53935;
     }
 
     .empty {
         text-align: center;
-        color: #777;
         font-size: 18px;
-        padding: 40px;
-    }
-
-    td[contenteditable="true"] {
-        background-color: #fff3cd;
-        border-radius: 5px;
+        color: #555;
+        padding: 30px 0;
     }
 </style>
 </head>
 <body>
-    <header>
-        <!--Chenge the title (This is at the top of the page)-->
-        Cheese factory
-    </header>
-
-    <nav>
-        <!--This is the nav bar under the title if you change something here you need to update it on every page-->
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="products.html">Products</a>
-        <a href="contact.html">Contact</a>
-        <a href="basket.html">Basket</a>
-    </nav>
-
-    <div class="container">
-    <table id="basket-table">
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Quantity</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody id="basket-body">
-            <tr><td colspan="4" class="empty">Loading your basket...</td></tr>
-        </tbody>
-    </table>
+<header>Your Basket</header>
+<div class="container" id="basket-container">
+    <p>Loading your basket...</p>
 </div>
+<footer>© 2025 Cheese Factory</footer>
 
+<script>
+async function loadBasket() {
+    const container = document.getElementById("basket-container");
 
-    <footer>
-        <!--Change this to your company name-->
-        © 2025 Cheese factory. All rights reserved.
-    </footer>
-    <script>
-function loadBasket() {
-    const basketBody = document.getElementById("basket-body");
-    const basket = JSON.parse(localStorage.getItem("cart") || "[]");
+    // Load saved cart
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    basketBody.innerHTML = "";
-
-    if (basket.length === 0) {
-        basketBody.innerHTML = '<tr><td colspan="4" class="empty">Your basket is empty.</td></tr>';
+    if (cart.length === 0) {
+        container.innerHTML = '<p class="empty">Your basket is empty 🧀</p>';
         return;
     }
 
-    basket.forEach((item, index) => {
-        const row = document.createElement("tr");
+    try {
+        const response = await fetch('products.json');
+        const products = await response.json();
 
-        const img = document.createElement("td");
-        const imageEl = document.createElement("img");
-        imageEl.src = item.image;
-        img.appendChild(imageEl);
+        container.innerHTML = '';
 
-        const name = document.createElement("td");
-        name.textContent = item.name;
+        cart.forEach(item => {
+            const product = products.find(p => p.id === item.id);
+            if (!product) return;
 
-        const quantity = document.createElement("td");
-        quantity.textContent = item.quantity;
-        quantity.title = "Double-click to edit quantity";
-        quantity.addEventListener("dblclick", () => {
-            quantity.setAttribute("contenteditable", "true");
-            quantity.focus();
-        });
-        quantity.addEventListener("blur", () => {
-            quantity.removeAttribute("contenteditable");
-            let newVal = parseInt(quantity.textContent);
-            if (isNaN(newVal) || newVal < 1) {
-                quantity.textContent = item.quantity;
-                return;
-            }
-            basket[index].quantity = newVal;
-            localStorage.setItem("basket", JSON.stringify(basket));
-        });
-        quantity.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") quantity.blur();
+            const displayImage = Array.isArray(product.image) ? product.image[0] : product.image;
+
+            const row = document.createElement('div');
+            row.className = 'product-row';
+
+            row.innerHTML = `
+                <div class="product-info">
+                    <img src="${displayImage}" alt="${product.name}">
+                    <div>
+                        <div class="product-name">${product.name}</div>
+                        <div class="quantity" data-id="${product.id}" title="Double-click to edit">${item.quantity}</div>
+                    </div>
+                </div>
+                <button class="delete-btn" data-id="${product.id}">Delete</button>
+            `;
+
+            container.appendChild(row);
         });
 
-        const del = document.createElement("td");
-        const delBtn = document.createElement("button");
-        delBtn.className = "delete-btn";
-        delBtn.textContent = "Delete";
-        delBtn.addEventListener("click", () => {
-            basket.splice(index, 1);
-            localStorage.setItem("basket", JSON.stringify(basket));
-            loadBasket();
+        // Handle delete
+        container.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = parseInt(e.target.dataset.id);
+                cart = cart.filter(i => i.id !== id);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                loadBasket(); // refresh
+            });
         });
-        del.appendChild(delBtn);
 
-        row.appendChild(img);
-        row.appendChild(name);
-        row.appendChild(quantity);
-        row.appendChild(del);
-        basketBody.appendChild(row);
-    });
+        // Handle quantity editing (double click to edit)
+        container.querySelectorAll('.quantity').forEach(span => {
+            span.addEventListener('dblclick', () => {
+                const id = parseInt(span.dataset.id);
+                span.contentEditable = true;
+                span.classList.add('editing');
+                span.focus();
+
+                span.addEventListener('blur', () => {
+                    span.contentEditable = false;
+                    span.classList.remove('editing');
+
+                    let newQty = parseInt(span.textContent.trim());
+                    if (isNaN(newQty) || newQty < 1) newQty = 1;
+                    span.textContent = newQty;
+
+                    const cartItem = cart.find(i => i.id === id);
+                    if (cartItem) cartItem.quantity = newQty;
+
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                }, { once: true });
+            });
+        });
+
+    } catch (err) {
+        console.error(err);
+        container.innerHTML = '<p class="empty">Failed to load basket. Please try again later.</p>';
+    }
 }
 
 loadBasket();
 </script>
-
 </body>
 </html>
