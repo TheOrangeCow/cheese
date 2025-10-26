@@ -66,7 +66,7 @@
         <div class = "basket" id="basket">
              <p>Loading your basket...</p>
         </div>
-       <button onclick="buynow()">Buy Now</button>
+       <button onclick="order()">Order</button>
     </div>
 
     <footer>© 2025 Cheese Factory</footer>
@@ -79,7 +79,7 @@
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
             if (cart.length === 0) {
-                container.innerHTML = '<p class="empty">Your basket is empty 🧀</p>';
+                container.innerHTML = '<p class="empty">Your basket is empty</p>';
                 return;
             }
 
