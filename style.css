@@ -182,12 +182,12 @@ footer {
     border-radius: 50px;
     padding: 8px 15px;
     margin: 15px 0;
-    background: var(--product-hover-bg-color);
+    background: var(--product-bg-color);
 }
 
 .qty-btn {
-    background-color: var(--button-bg-color);
-    color: var(--button-text-color);
+    background-color: var(--product-bg-color);
+    
     border: none;
     border-radius: 50%;
     width: 28px;
@@ -197,9 +197,7 @@ footer {
     transition: background 0.3s;
 }
 
-.qty-btn:hover {
-    background-color: var(--button-hover-bg-color);
-}
+
 
 #quantity {
     font-size: 16px;
@@ -214,7 +212,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid var(--body-bg-color);
+    border-bottom: 1px solid ;
     padding: 10px 0;
 }
 
@@ -264,9 +262,6 @@ footer {
     transition: 0.2s;
 }
 
-.delete-btn:hover {
-    background: #e53935;
-}
 
 .empty {
     text-align: center;
