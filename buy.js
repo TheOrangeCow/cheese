@@ -1,4 +1,4 @@
-function louadPage() {
+async function louadPage() {
         const container = document.getElementById("list");
 
 
