@@ -176,37 +176,38 @@ footer {
 .quantity-box {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    border: 2px solid var(--product-border-color);
-    border-radius: 50px;
-    padding: 8px 15px;
-    margin: 15px 0;
-    background: var(--product-bg-color);
+    justify-content: space-between;
+    border: 1.5px solid #ccc;
+    border-radius: 30px;
+    padding: 5px 10px;
+    background: #fff;
+    font-family: Arial, sans-serif;
 }
 
 .qty-btn {
-    background-color: var(--product-bg-color);
-    color: #000;
+    background: none;
     border: none;
-    border-radius: 50%;
+    color: #333;
+    font-size: 20px;
     width: 28px;
     height: 28px;
-    font-size: 18px;
+    line-height: 1;
+    border-radius: 50%;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.2s, color 0.2s;
 }
 
 .qty-btn:hover {
-    background-color: var(--product-bg-color);
+    background: #f2f2f2;
     color: #000;
 }
 
 #quantity {
-    font-size: 16px;
-    font-weight: bold;
-    min-width: 20px;
+    min-width: 24px;
     text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
 }
 
 
