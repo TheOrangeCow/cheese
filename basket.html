@@ -62,14 +62,18 @@
         <a href="contact.html">Contact</a>
         <a href="basket.html">Basket</a>
     </nav>
-    <div class="container" id="basket-container">
-        <p>Loading your basket...</p>
+    <div class="container" >
+        <div class = "basket" id="basket">
+             <p>Loading your basket...</p>
+        </div>
+       <button onclick="buynow()">Buy Now</button>
     </div>
+
     <footer>© 2025 Cheese Factory</footer>
 
     <script>
         async function loadBasket() {
-            const container = document.getElementById("basket-container");
+            const container = document.getElementById("basket");
 
 
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
