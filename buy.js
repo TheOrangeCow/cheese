@@ -39,7 +39,7 @@ async function louadPage() {
                     //Shipping cost
                     totle_price = totle_price + shippingcost()
                     //The added cart fee
-                    let card_paymant  = (totle_price + 0.20) / 0.985;
+                    let card_paymant  = (totle_price * 0.015) +0.2;
                     card_paymant = Math.ceil(card_paymant * 100) / 100;
 
                     totle_price = totle_price + card_paymant
