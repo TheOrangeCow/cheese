@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shipping Info</title>
+</head>
+<body>
+  <h2>Enter your shipping information</h2>
+
+  <form id="shippingForm">
+    <label>Name:</label><br>
+    <input type="text" id="name" required><br><br>
+
+    <label>Email or Phone:</label><br>
+    <input type="text" id="contact" required><br><br>
+
+    <label>Address:</label><br>
+    <textarea id="address" required></textarea><br><br>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <p id="result"></p>
+
+  <script>
+    // Change this to your deployed backend URL
+    const backendURL = "https://cheese-backend-x01h.onrender.com/save-info";
+
+    document.getElementById("shippingForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const data = {
+        name: document.getElementById("name").value,
+        contact: document.getElementById("contact").value,
+        address: document.getElementById("address").value
+      };
+
+      try {
+        const res = await fetch(backendURL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+        document.getElementById("result").innerText =
+          result.success ? "✅ Info saved!" : "❌ Error saving info.";
+      } catch (err) {
+        document.getElementById("result").innerText = "❌ Connection error.";
+      }
+    });
+  </script>
+</body>
+</html>
