@@ -19,27 +19,28 @@ async function louadPage() {
                 cart.forEach(item => {
                     const product = products.find(p => p.id === item.id);
                     if (!product) return;
-
-                    
-
                     const row = document.createElement('div');
-                    //row.className = '';
+                    
+                    let product_price = product.price * item.quantity
+                    product_price = Math.ceil(product_price * 100) / 100;
 
                     row.innerHTML = `
                         <div class="product-info">
-                            <p>${product.name}, ${item.quantity}, ${(product.price * item.quantity)}, ${product.price}</p>
+                            <p>${product.name}, ${item.quantity}, ${product_price}, ${product.price}</p>
                         </div>
                        
                     `;
 
 
                     container.appendChild(row);
-                    totle_price = totle_price + (product.price * item.quantity)
+                    totle_price = totle_price + product_price
                 });
                     const data = document.createElement('div');
                     //Shipping cost
-                    totle_price = totle_price + 5.20
+                    totle_price = totle_price + shippingcost()
+                    //The added cart fee
                     let card_paymant  = (totle_price + 0.20) / 0.985;
+                    card_paymant = Math.ceil(card_paymant * 100) / 100;
 
                     totle_price = totle_price + card_paymant
                     data.innerHTML = `
