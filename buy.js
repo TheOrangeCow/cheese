@@ -1,65 +1,3 @@
-async function louadPage() {
-        const container = document.getElementById("list");
-
-
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-            if (cart.length === 0) {
-                container.innerHTML = '<p class="empty">Error nothing in your basket</p>';
-                return;
-            }
-
-            try {
-                const response = await fetch('products.json');
-                const products = await response.json();
-                let totle_price = 0
-
-                container.innerHTML = '';
-
-                cart.forEach(item => {
-                    const product = products.find(p => p.id === item.id);
-                    if (!product) return;
-                    const row = document.createElement('div');
-                    
-                    let product_price = product.price * item.quantity
-                    product_price = Math.ceil(product_price * 100) / 100;
-
-                    row.innerHTML = `
-                        <div class="product-info">
-                            <p>${product.name}, ${item.quantity}, ${product_price}, ${product.price}</p>
-                        </div>
-                       
-                    `;
-
-
-                    container.appendChild(row);
-                    totle_price = totle_price + product_price
-                });
-                    const data = document.createElement('div');
-                    //Shipping cost
-                    totle_price = totle_price + shippingcost()
-                    //The added cart fee
-                    let card_paymant  = (totle_price * 0.015) +0.2;
-                    card_paymant = Math.ceil(card_paymant * 100) / 100;
-
-                    totle_price = totle_price + card_paymant
-                    data.innerHTML = `
-                        <div class="product-info">
-                            <!--Shipping cost-->
-                            <p>Shipping: £5.20</p>
-                            <p class="quantity">Card transaction fee: ${card_paymant} </p>
-                            <p>Total ${totle_price}</p>
-                        </div>
-                       
-                    `;
-                    container.appendChild(data);
-                
-
-            } catch (err) {
-                console.error(err);
-                container.innerHTML = '<p class="empty">Failed to load basket. Please try again later.</p>';
-            }
-        }
 
 
 
@@ -70,4 +8,55 @@ function order(){
 
 function shippingcost(){
     return 5.20
+}
+async function cost(){
+    try {
+        const response = await fetch('products.json');
+        const products = await response.json();
+        let total_price = 0;
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const items = [];
+
+        if (cart.length === 0) {
+            return { error: "Nothing in your basket" };
+        }
+
+        cart.forEach(item => {
+            const product = products.find(p => p.id === item.id);
+            if (!product) return;
+
+            let product_price = product.price * item.quantity;
+            product_price = Math.ceil(product_price * 100) / 100;
+
+            items.push({
+                id: product.id,
+                name: product.name,
+                quantity: item.quantity,
+                unit_price: product.price,
+                total_price: product_price
+            });
+
+            total_price += product_price;
+        });
+
+        const shipping = shippingcost();
+        total_price += shipping;
+
+        let card_payment = (total_price * 0.015) + 0.2;
+        card_payment = Math.ceil(card_payment * 100) / 100;
+        total_price += card_payment;
+
+        const result = {
+            items,
+            shipping: shipping,
+            card_fee: card_payment,
+            total: Math.ceil(total_price * 100) / 100
+        };
+
+        return result;
+
+    } catch (err) {
+        console.error(err);
+        return { error: "Failed to load basket data" };
+    }
 }
