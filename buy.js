@@ -27,19 +27,20 @@ async function louadPage() {
 
                     row.innerHTML = `
                         <div class="product-info">
-                            <p>${product.name}, ${item.quantity}, ${product.price}</p>
+                            <p>${product.name}, ${item.quantity}, ${(product.price * item.quantity)}, ${product.price}</p>
                         </div>
                        
                     `;
 
 
                     container.appendChild(row);
-                    totle_price = totle_price + product.price
+                    totle_price = totle_price + (product.price * item.quantity)
                 });
                     const data = document.createElement('div');
                     //Shipping cost
                     totle_price = totle_price + 5.20
-                    let card_paymant = (1.5 / 100) * totle_price
+                    let card_paymant  = (total_price + 0.20) / 0.985;
+
                     totle_price = totle_price + card_paymant
                     data.innerHTML = `
                         <div class="product-info">
@@ -66,3 +67,6 @@ function order(){
     window.location.href="buy.html"
 }
 
+function shippingcost(){
+    return 5.20
+}
