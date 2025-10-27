@@ -75,7 +75,6 @@ footer {
     color: var(--footer-text-color);
     position: absolute;
     bottom: 0;
-    left: 0;
 }
 
 .container {
