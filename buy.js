@@ -60,3 +60,38 @@ async function cost(){
         return { error: "Failed to load basket data" };
     }
 }
+
+function ping(){
+    const backendUrl = "https://cheese-backend-x01h.onrender.com";
+    window.addEventListener("load", async () => {
+        try {
+            await fetch(`${backendUrl}/ping`);
+            console.log("Backend ping successful — service is awake.");
+        } catch (err) {
+            console.warn("Backend ping failed. Service may be asleep or unreachable.");
+        }
+    });
+}
+
+async function buy() {
+    const backendUrl = "https://cheese-backend-x01h.onrender.com";
+    const cart = [
+        { name: "Cheese", price: 15, quantity: 2 },
+        { name: "pop Pack", price: 3, quantity: 5 }
+    ];
+    try {
+        const res = await fetch(`${backendUrl}/create-session`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ cart })
+        });
+        const data = await res.json();
+        if (data.url) window.location = data.url;
+        else alert("Error: " + data.error);
+      } catch (err) {
+        alert("Checkout bissie. Try again in a few seconds.");
+        console.error(err);
+      }
+    }
+
+    document.getElementById("checkoutBtn").addEventListener("click", checkout);
