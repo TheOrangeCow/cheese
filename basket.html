@@ -120,6 +120,7 @@
 
             container.querySelectorAll('.quantity').forEach(span => {
                 span.addEventListener('dblclick', () => {
+                    let cart = JSON.parse(localStorage.getItem("cart")) || [];
                     const id = parseInt(span.dataset.id);
                     span.contentEditable = true;
                     span.classList.add('editing');
@@ -143,6 +144,7 @@
 
             container.querySelectorAll('.delete-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
+                    let cart = JSON.parse(localStorage.getItem("cart")) || [];
                     const id = parseInt(e.target.dataset.id);
                     cart = cart.filter(i => i.id !== id);
                     localStorage.setItem('cart', JSON.stringify(cart));
