@@ -32,10 +32,8 @@
     </footer>
     <script src="buy.js"></script>
     <script>
-        
         async function dissply() {
             const data = await cost();
-            console.log(data)
             const container = document.getElementById("list");
             container.innerHTML = "";
 
@@ -52,13 +50,13 @@
                 const row = document.createElement("div");
                 row.className = "basket-item";
                 row.innerHTML = `
-            <div class="product-info">
-                <p><strong>${item.name}</strong></p>
-                <p>Quantity: ${item.quantity}</p>
-                <p>Unit price: £${item.unit_price.toFixed(2)}</p>
-                <p>Total: £${item.total_price.toFixed(2)}</p>
-            </div>
-        `;
+                    <div class="product-info">
+                        <p><strong>${item.name}</strong></p>
+                        <p>Quantity: ${item.quantity}</p>
+                        <p>Unit price: £${item.unit_price.toFixed(2)}</p>
+                        <p>Total: £${item.total_price.toFixed(2)}</p>
+                    </div>
+                `;
                 container.appendChild(row);
 
                 total_price += item.total_price;
@@ -68,11 +66,11 @@
             const summary = document.createElement("div");
             summary.className = "basket-summary";
             summary.innerHTML = `
-        <hr>
-        <p>Shipping: £${data.shipping.toFixed(2)}</p>
-        <p>Card transaction fee: £${data.card_fee.toFixed(2)}</p>
-        <h3>Total: £${data.total.toFixed(2)}</h3>
-    `;
+                <hr>
+                <p>Shipping: £${data.shipping.toFixed(2)}</p>
+                <p>Card transaction fee: £${data.card_fee.toFixed(2)}</p>
+                <h3>Total: £${data.total.toFixed(2)}</h3>
+            `;
             container.appendChild(summary);
         }
         dissply()

@@ -62,16 +62,105 @@
         <a href="contact.html">Contact</a>
         <a href="basket.html">Basket</a>
     </nav>
-    <div class="container" >
-        <div class = "basket" id="basket">
-             <p>Loading your basket...</p>
+    <div class="container">
+        <div class="basket" id="basket">
+            <p>Loading your basket...</p>
         </div>
-       <button onclick="order()">Order</button>
+        <button onclick="order()">Order</button>
     </div>
 
     <footer>© 2025 Cheese Factory</footer>
 
     <script>
+        async function dissply() {
+            const data = await cost();
+            const container = document.getElementById("basket");
+            const response = await fetch('products.json');
+            const products = await response.json();
+
+
+            container.innerHTML = "";
+
+            // If error or no items
+            if (!data || data.error || !data.items || data.items.length === 0) {
+                container.innerHTML = '<p class="empty">Error: nothing in your basket</p>';
+                return;
+            }
+
+
+
+            // Display each item
+            data.items.forEach(item => {
+                const product = products.find(p => p.id === item.id);
+                if (!product) return;
+                const displayImage = Array.isArray(product.image) ? product.image[0] : product.image;
+
+                const row = document.createElement("div");
+                row.className = "product-row";
+                row.innerHTML = `
+                    <div class="product-info">
+                        <img src="${displayImage}" alt="${product.name}">
+                        <div>
+                            <div class="product-name"><strong>${item.name}</strong></div>
+                            <div class="quantity" data-id="${item.id}">${item.quantity}</div>
+                            <p>Unit price: £${item.unit_price}</p>
+                            <p>Total: £${item.total_price}</p>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(row);
+
+
+            });
+
+            // Add totals
+            const summary = document.createElement("div");
+            summary.className = "basket-summary";
+            summary.innerHTML = `
+                <hr>
+                <p>Shipping: £${data.shipping}</p>
+                <p>Card transaction fee: £${data.card_fee}</p>
+                <h3>Total: £${data.total}</h3>
+            `;
+            container.appendChild(summary);
+
+            container.querySelectorAll('.quantity').forEach(span => {
+                span.addEventListener('dblclick', () => {
+                    const id = parseInt(span.dataset.id);
+                    span.contentEditable = true;
+                    span.classList.add('editing');
+                    span.focus();
+
+                    span.addEventListener('blur', () => {
+                        span.contentEditable = false;
+                        span.classList.remove('editing');
+
+                        let newQty = parseInt(span.textContent.trim());
+                        if (isNaN(newQty) || newQty < 1) newQty = 1;
+                        span.textContent = newQty;
+
+                        const cartItem = cart.find(i => i.id === id);
+                        if (cartItem) cartItem.quantity = newQty;
+
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                    }, { once: true });
+                });
+            });
+
+            container.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    cart = cart.filter(i => i.id !== id);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    loadBasket(); // refresh
+                });
+            });
+
+        }
+        dissply()
+
+
+
         async function loadBasket() {
             const container = document.getElementById("basket");
 
@@ -152,9 +241,9 @@
             }
         }
 
-        loadBasket();
+        //loadBasket();
     </script>
-    <script src = "buy.js"></script>
+    <script src="buy.js"></script>
 </body>
 
 </html>
