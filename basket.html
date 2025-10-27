@@ -66,7 +66,7 @@
         <div class="basket" id="basket">
             <p>Loading your basket...</p>
         </div>
-        <button onclick="order()">Order</button>
+        <button onclick="order()">Conform your order</button>
     </div>
 
     <footer>© 2025 Cheese Factory</footer>
@@ -77,19 +77,13 @@
             const container = document.getElementById("basket");
             const response = await fetch('products.json');
             const products = await response.json();
-
-
             container.innerHTML = "";
 
-            // If error or no items
             if (!data || data.error || !data.items || data.items.length === 0) {
                 container.innerHTML = '<p class="empty">Error: nothing in your basket</p>';
                 return;
             }
 
-
-
-            // Display each item
             data.items.forEach(item => {
                 const product = products.find(p => p.id === item.id);
                 if (!product) return;
@@ -113,11 +107,10 @@
 
             });
 
-            // Add totals
+
             const summary = document.createElement("div");
             summary.className = "basket-summary";
             summary.innerHTML = `
-                <hr>
                 <p>Shipping: £${data.shipping}</p>
                 <p>Card transaction fee: £${data.card_fee}</p>
                 <h3>Total: £${data.total}</h3>
@@ -158,92 +151,7 @@
 
         }
         dissply()
-
-
-
-        async function loadBasket() {
-            const container = document.getElementById("basket");
-
-
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-            if (cart.length === 0) {
-                container.innerHTML = '<p class="empty">Your basket is empty</p>';
-                return;
-            }
-
-            try {
-                const response = await fetch('products.json');
-                const products = await response.json();
-
-                container.innerHTML = '';
-
-                cart.forEach(item => {
-                    const product = products.find(p => p.id === item.id);
-                    if (!product) return;
-
-                    const displayImage = Array.isArray(product.image) ? product.image[0] : product.image;
-
-                    const row = document.createElement('div');
-                    row.className = 'product-row';
-
-                    row.innerHTML = `
-                <div class="product-info">
-                    <img src="${displayImage}" alt="${product.name}">
-                    <div>
-                        <div class="product-name">${product.name}</div>
-                        <div class="quantity" data-id="${product.id}" title="Double-click to edit">${item.quantity}</div>
-                    </div>
-                </div>
-                <button class="delete-btn" data-id="${product.id}">Delete</button>
-            `;
-
-                    container.appendChild(row);
-                });
-
-                // Handle delete
-                container.querySelectorAll('.delete-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const id = parseInt(e.target.dataset.id);
-                        cart = cart.filter(i => i.id !== id);
-                        localStorage.setItem('cart', JSON.stringify(cart));
-                        loadBasket(); // refresh
-                    });
-                });
-
-                // Handle quantity editing (double click to edit)
-                container.querySelectorAll('.quantity').forEach(span => {
-                    span.addEventListener('dblclick', () => {
-                        const id = parseInt(span.dataset.id);
-                        span.contentEditable = true;
-                        span.classList.add('editing');
-                        span.focus();
-
-                        span.addEventListener('blur', () => {
-                            span.contentEditable = false;
-                            span.classList.remove('editing');
-
-                            let newQty = parseInt(span.textContent.trim());
-                            if (isNaN(newQty) || newQty < 1) newQty = 1;
-                            span.textContent = newQty;
-
-                            const cartItem = cart.find(i => i.id === id);
-                            if (cartItem) cartItem.quantity = newQty;
-
-                            localStorage.setItem('cart', JSON.stringify(cart));
-                        }, { once: true });
-                    });
-                });
-
-            } catch (err) {
-                console.error(err);
-                container.innerHTML = '<p class="empty">Failed to load basket. Please try again later.</p>';
-            }
-        }
-
-        //loadBasket();
     </script>
-    <script src="buy.js"></script>
 </body>
 
 </html>
