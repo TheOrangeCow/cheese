@@ -73,7 +73,7 @@
                 <p>Shipping: £${data.shipping.toFixed(2)}</p>
                 <p>Card transaction fee: £${data.card_fee.toFixed(2)}</p>
                 <h3>Total: £${data.total.toFixed(2)}</h3>
-                <button id="buy">Buy now</button>
+                <button onclick="buy()">Buy now</button>
             `;
             container.appendChild(summary);
         }

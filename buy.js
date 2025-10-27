@@ -101,7 +101,7 @@ async function buy() {
       } catch (err) {
         alert("Checkout bissie. Try again in a few seconds.");
         console.error(err);
-      }
     }
+}
 
-    document.getElementById("buy").addEventListener("click", checkout);
+    
