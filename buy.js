@@ -34,7 +34,7 @@ async function louadPage() {
 
 
                     container.appendChild(row);
-                    totle_price = totle_price + ${product.price}
+                    totle_price = totle_price + product.price
                 });
                     const data = document.createElement('div');
                     //Shipping cost
