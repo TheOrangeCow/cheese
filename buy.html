@@ -28,13 +28,14 @@
     </div>
     <footer>
         <!--Change this to your company name-->
-        &copt; 2025 Cheese factory. All rights reserved.
+        &copy; 2025 Cheese factory. All rights reserved.
     </footer>
     <script src="buy.js"></script>
     <script>
-        const data = cost();
-        const container = document.getElementById("list");
-        function dissply(data, container) {
+        
+        async function dissply() {
+            const data = await cost();
+            const container = document.getElementById("list");
             container.innerHTML = "";
 
             // If error or no items
