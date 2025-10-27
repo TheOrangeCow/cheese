@@ -61,7 +61,7 @@ async function cost(){
     }
 }
 
-function (){
+function ping(){
     const backendUrl = "https://cheese-backend-x01h.onrender.com";
     window.addEventListener("load", async () => {
         try {
