@@ -76,7 +76,7 @@ function ping(){
 async function buy() {
     const backendUrl = "https://cheese-backend-x01h.onrender.com";
 
-    const data2 =cost()
+    const data2 = await cost()
     
     const cart = data2.items.map(item => ({
         name: item.name,
