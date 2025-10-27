@@ -50,7 +50,7 @@ async function louadPage() {
                         </div>
                        
                     `;
-
+                    container.appendChild(data);
                 
 
             } catch (err) {
