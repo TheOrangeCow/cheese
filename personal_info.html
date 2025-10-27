@@ -43,9 +43,9 @@
 
         const result = await res.json();
         document.getElementById("result").innerText =
-          result.success ? "✅ Info saved!" : "❌ Error saving info.";
+          result.success ? "✅ Info saved!" : " Error saving info.";
       } catch (err) {
-        document.getElementById("result").innerText = "❌ Connection error.";
+        document.getElementById("result").innerText = " Connection error.";
       }
     });
   </script>
