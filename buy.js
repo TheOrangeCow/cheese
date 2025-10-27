@@ -39,7 +39,7 @@ async function louadPage() {
                     const data = document.createElement('div');
                     //Shipping cost
                     totle_price = totle_price + 5.20
-                    let card_paymant  = (total_price + 0.20) / 0.985;
+                    let card_paymant  = (totle_price + 0.20) / 0.985;
 
                     totle_price = totle_price + card_paymant
                     data.innerHTML = `
