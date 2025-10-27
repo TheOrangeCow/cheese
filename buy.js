@@ -61,7 +61,7 @@ async function cost(){
     }
 }
 
-function ping(){
+function (){
     const backendUrl = "https://cheese-backend-x01h.onrender.com";
     window.addEventListener("load", async () => {
         try {
@@ -75,10 +75,20 @@ function ping(){
 
 async function buy() {
     const backendUrl = "https://cheese-backend-x01h.onrender.com";
-    const cart = [
-        { name: "Cheese", price: 15, quantity: 2 },
-        { name: "pop Pack", price: 3, quantity: 5 }
-    ];
+
+    const data2 =cost()
+    
+    const cart = data2.items.map(item => ({
+        name: item.name,
+        price: item.unit_price,
+        quantity: item.quantity
+    }));
+
+    cart.push(
+        { name: "Shipping", price: data2.shipping, quantity: 1 },
+        { name: "Card Fee", price: data2.card_fee, quantity: 1 }
+    );
+
     try {
         const res = await fetch(`${backendUrl}/create-session`, {
             method: "POST",
@@ -94,4 +104,4 @@ async function buy() {
       }
     }
 
-    document.getElementById("checkoutBtn").addEventListener("click", checkout);
+    document.getElementById("buy").addEventListener("click", checkout);

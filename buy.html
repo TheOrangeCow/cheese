@@ -32,6 +32,7 @@
     </footer>
     <script src="buy.js"></script>
     <script>
+        ping()
         async function dissply() {
             const data = await cost();
             console.log(data)
@@ -71,6 +72,7 @@
                 <p>Shipping: £${data.shipping.toFixed(2)}</p>
                 <p>Card transaction fee: £${data.card_fee.toFixed(2)}</p>
                 <h3>Total: £${data.total.toFixed(2)}</h3>
+                <button id="buy">Buy now</button>
             `;
             container.appendChild(summary);
         }
