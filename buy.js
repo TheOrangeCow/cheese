@@ -102,6 +102,31 @@ async function buy() {
         alert("Checkout bissie. Try again in a few seconds.");
         console.error(err);
     }
-}
 
+
+    const backendURL2 = "https://cheese-backend2.onrender.com/save-info";
+
+
+    const info = JSON.parse(localStorage.getItem("userInfo"));
+    if (!info || !info.name || !info.contact || !info.address) {
+        window.location.href = "personal_info.html";
+        return;
+    }
+
+    const data = {
+        name: info.name,
+        contact: info.contact,
+        address: "${info.address.line1}, ${info.address.postcode}, ${info.address.country}"
+      };
+
+    try {
+        const res = await fetch(backendURL2, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
     
+    });
+}
