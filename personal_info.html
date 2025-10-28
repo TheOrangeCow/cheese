@@ -52,157 +52,184 @@
 </body>
 </html-->
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Person Info — Live Validation</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personal Info Form</title>
   <style>
-    body{font-family:Inter, system-ui, sans-serif;background:#0f1724;color:#e6eef8;padding:32px}
-    .wrap{max-width:600px;margin:auto}
-    form{display:grid;gap:12px;background:#111a2d;padding:22px;border-radius:10px}
-    label{font-size:14px;color:#94a3b8}
-    input,textarea,select{width:100%;padding:10px;border-radius:6px;border:1px solid #2a3b55;background:#0b1320;color:inherit;font-size:15px}
-    input:focus,textarea:focus{outline:none;border-color:#60a5fa}
-    .error{font-size:12px;color:#ef4444;margin-top:4px;min-height:14px}
-    button{background:#60a5fa;color:#0b1320;border:none;padding:10px;border-radius:6px;font-weight:600;cursor:pointer}
-    button:hover{background:#7eb4ff}
-    .success{color:#10b981;font-weight:600;margin-top:10px}
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f6f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    form {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 340px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    input:focus {
+      border-color: #0078ff;
+      outline: none;
+    }
+    small {
+      color: red;
+      display: none;
+      font-size: 13px;
+    }
+    #suggestions {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-top: none;
+      max-height: 150px;
+      overflow-y: auto;
+      border-radius: 0 0 5px 5px;
+      position: absolute;
+      width: calc(100% - 20px);
+      z-index: 10;
+    }
+    #suggestions div {
+      padding: 6px;
+      cursor: pointer;
+    }
+    #suggestions div:hover {
+      background: #f0f0f0;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      background: #0078ff;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .field {
+      position: relative;
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>Enter Your Information</h1>
-    <form id="personForm" novalidate>
-      <div>
-        <label for="fullname">Full name</label>
-        <input id="fullname" name="fullname" type="text" required placeholder="e.g. Alex Johnson" />
-        <div class="error" id="nameError"></div>
-      </div>
-      <div>
-        <label for="contactChoice">Preferred contact</label>
-        <select id="contactChoice">
-          <option value="email">Email</option>
-          <option value="phone">Phone</option>
-        </select>
-      </div>
-      <div id="emailWrap">
-        <label for="email">Email</label>
-        <input id="email" name="email" type="email" placeholder="you@example.com" />
-        <div class="error" id="emailError"></div>
-      </div>
-      <div id="phoneWrap" style="display:none">
-        <label for="phone">Phone</label>
-        <input id="phone" name="phone" type="tel" placeholder="+44 7123 456789" />
-        <div class="error" id="phoneError"></div>
-      </div>
-      <div>
-        <label for="address1">Address line 1</label>
-        <input id="address1" name="address1" type="text" />
-        <div class="error" id="addressError"></div>
-      </div>
-      <div>
-        <label for="city">City / Town</label>
-        <input id="city" name="city" type="text" />
-        <div class="error" id="cityError"></div>
-      </div>
-      <div>
-        <label for="postcode">Postcode / ZIP</label>
-        <input id="postcode" name="postcode" type="text" />
-        <div class="error" id="postcodeError"></div>
-      </div>
-      <button type="submit">Submit</button>
-      <div id="status" class="success"></div>
-    </form>
-  </div>
+  <form id="infoForm">
+    <label for="name">Name</label>
+    <input type="text" id="name" placeholder="John Smith" />
+    <small id="nameError">Name must be at least 2 characters.</small>
+
+    <label for="contact">Email or Phone</label>
+    <input type="text" id="contact" placeholder="email@example.com or 07123456789" />
+    <small id="contactError">Please enter a valid email or phone number.</small>
+
+    <label for="address">Address</label>
+    <div class="field">
+      <input type="text" id="address" placeholder="Start typing your address..." autocomplete="off" />
+      <div id="suggestions"></div>
+    </div>
+    <small id="addressError">Please enter a valid address.</small>
+
+    <button type="submit">Submit</button>
+  </form>
 
   <script>
-    const form = document.getElementById('personForm');
-    const contactChoice = document.getElementById('contactChoice');
-    const emailWrap = document.getElementById('emailWrap');
-    const phoneWrap = document.getElementById('phoneWrap');
+    const nameInput = document.getElementById("name");
+    const contactInput = document.getElementById("contact");
+    const addressInput = document.getElementById("address");
+    const suggestionsBox = document.getElementById("suggestions");
 
-    const fields = {
-      fullname: document.getElementById('fullname'),
-      email: document.getElementById('email'),
-      phone: document.getElementById('phone'),
-      address1: document.getElementById('address1'),
-      city: document.getElementById('city'),
-      postcode: document.getElementById('postcode')
-    };
+    const nameError = document.getElementById("nameError");
+    const contactError = document.getElementById("contactError");
+    const addressError = document.getElementById("addressError");
 
-    const errors = {
-      fullname: document.getElementById('nameError'),
-      email: document.getElementById('emailError'),
-      phone: document.getElementById('phoneError'),
-      address1: document.getElementById('addressError'),
-      city: document.getElementById('cityError'),
-      postcode: document.getElementById('postcodeError')
-    };
-
-    contactChoice.addEventListener('change', ()=>{
-      if (contactChoice.value==='email'){
-        emailWrap.style.display='';
-        phoneWrap.style.display='none';
-      } else {
-        emailWrap.style.display='none';
-        phoneWrap.style.display='';
+    function validate(input) {
+      if (input === nameInput) {
+        nameError.style.display = nameInput.value.trim().length < 2 ? "block" : "none";
       }
+      if (input === contactInput) {
+        const val = contactInput.value.trim();
+        const valid = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val) || /^\d{10,}$/.test(val);
+        contactError.style.display = valid ? "none" : "block";
+      }
+      if (input === addressInput) {
+        addressError.style.display = addressInput.value.trim().length < 5 ? "block" : "none";
+      }
+    }
+
+    nameInput.addEventListener("input", () => validate(nameInput));
+    contactInput.addEventListener("input", () => validate(contactInput));
+
+    // Address autocomplete using OpenStreetMap (Nominatim)
+    let timeout;
+    addressInput.addEventListener("input", () => {
+      validate(addressInput);
+      clearTimeout(timeout);
+      const query = addressInput.value.trim();
+      suggestionsBox.innerHTML = "";
+      if (query.length < 3) return;
+
+      timeout = setTimeout(async () => {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=5`;
+        const response = await fetch(url, { headers: { "User-Agent": "MyAddressApp/1.0" } });
+        const results = await response.json();
+        if (!results.length) return;
+        results.forEach((r) => {
+          const div = document.createElement("div");
+          div.textContent = r.display_name;
+          div.addEventListener("click", () => {
+            addressInput.value = r.display_name;
+            suggestionsBox.innerHTML = "";
+            validate(addressInput);
+          });
+          suggestionsBox.appendChild(div);
+        });
+      }, 400);
     });
 
-    for (const key in fields){
-      fields[key].addEventListener('input', ()=>validateField(key));
-    }
+    document.addEventListener("click", (e) => {
+      if (!addressInput.contains(e.target)) suggestionsBox.innerHTML = "";
+    });
 
-    function validateField(name){
-      const v = fields[name].value.trim();
-      let message = '';
-      switch(name){
-        case 'fullname':
-          if (v.length < 2) message = 'Name must be at least 2 characters.';
-          break;
-        case 'email':
-          if (contactChoice.value==='email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) message = 'Enter a valid email.';
-          break;
-        case 'phone':
-          if (contactChoice.value==='phone' && !/^\+?[0-9]{7,15}$/.test(v.replace(/[^0-9+]/g,''))) message = 'Enter a valid phone number.';
-          break;
-        case 'address1':
-          if (!v) message = 'Address cannot be empty.';
-          break;
-        case 'city':
-          if (!v) message = 'City cannot be empty.';
-          break;
-        case 'postcode':
-          if (!/^[A-Za-z0-9 \-]{3,10}$/.test(v)) message = 'Invalid postcode format.';
-          break;
-      }
-      errors[name].textContent = message;
-      return message==="";
-    }
-
-    form.addEventListener('submit', (e)=>{
+    document.getElementById("infoForm").addEventListener("submit", (e) => {
       e.preventDefault();
-      let ok = true;
-      for (const key in fields){ if (!validateField(key)) ok=false; }
-      if (ok){
-        localStorage.setItem('personInfo_v1', JSON.stringify(Object.fromEntries(new FormData(form))));
-        document.getElementById('status').textContent = 'Saved successfully!';
-      } else {
-        document.getElementById('status').textContent = '';
-      }
-    });
+      validate(nameInput);
+      validate(contactInput);
+      validate(addressInput);
 
-    // Load saved
-    window.addEventListener('load', ()=>{
-      const data = localStorage.getItem('personInfo_v1');
-      if (!data) return;
-      const obj = JSON.parse(data);
-      for (const key in fields){ if (obj[key]) fields[key].value=obj[key]; }
-      contactChoice.dispatchEvent(new Event('change'));
+      if (
+        nameError.style.display === "none" &&
+        contactError.style.display === "none" &&
+        addressError.style.display === "none"
+      ) {
+        const userData = {
+          name: nameInput.value,
+          contact: contactInput.value,
+          address: addressInput.value,
+        };
+        localStorage.setItem("userInfo", JSON.stringify(userData));
+        alert("Information saved to local storage!");
+      } else {
+        alert("Please fix the errors before submitting.");
+      }
     });
   </script>
 </body>
 </html>
-
