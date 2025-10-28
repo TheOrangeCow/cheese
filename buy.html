@@ -105,8 +105,9 @@
         }
         function displayPersonalInfo() {
             const info = JSON.parse(localStorage.getItem("userInfo"));
-            if (!info.address || !info || !info.name || !info.contact ) {
+            if (!info || !info.name || !info.contact || !info.address) {
                 window.location.href = "personal_info.html";
+                return; // make sure the rest doesn't run
             }
 
             document.getElementById("pi-name").textContent = `Name: ${info.name}`;
