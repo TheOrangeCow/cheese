@@ -7,7 +7,7 @@
     <title>Cheese factory</title>
     <link rel="stylesheet" href="style.css">
     <link type="ico" href="images/logo/logo.ico">
-    <style> 
+    <style>
         .checkout-container {
             display: flex;
             gap: 20px;
@@ -24,10 +24,7 @@
             padding: 15px;
             border-radius: 8px;
             border: 1px solid #ccc;
-            position: absolute;
-            right: 0;
         }
-
     </style>
 </head>
 
@@ -46,6 +43,13 @@
         <a href="basket.html">Basket</a>
     </nav>
     <div class="container">
+        <div id="personalInfo" class="personal-info">
+            <h3>Your Daitles</h3>
+            <p id="pi-name"></p>
+            <p id="pi-contact"></p>
+            <p id="pi-address"></p>
+            <a href="personal_info.html">Edit</a>
+        </div>
         <h2>Conferm your order</h2>
         <div id="list"></div>
     </div>
@@ -92,12 +96,6 @@
             summary.className = "basket-summary";
             summary.innerHTML = `
                 <hr>
-                <div id="personalInfo" class="personal-info">
-                    <h3>Your Info</h3>
-                    <p id="pi-name"></p>
-                    <p id="pi-contact"></p>
-                    <p id="pi-address"></p>
-                </div>
                 <p>Shipping: £${data.shipping.toFixed(2)}</p>
                 <p>Card transaction fee: £${data.card_fee.toFixed(2)}</p>
                 <h3>Total: £${data.total.toFixed(2)}</h3>
@@ -107,17 +105,16 @@
         }
         function displayPersonalInfo() {
             const info = JSON.parse(localStorage.getItem("userInfo"));
-            if (!info) return;
+            if (!info.address || !info || info.name || info.contact ) {
+                window.location.href = "personal_info.html";
+            }
 
             document.getElementById("pi-name").textContent = `Name: ${info.name}`;
             document.getElementById("pi-contact").textContent = `Contact: ${info.contact}`;
+
             
-            if (info.address) {
-                document.getElementById("pi-address").textContent = 
-                    `Address: ${info.address.line1}, ${info.address.postcode}, ${info.address.country}`;
-            } else {
-                document.getElementById("pi-address").textContent = "Address: N/A";
-            }
+            document.getElementById("pi-address").textContent = `Address: ${info.address.line1}, ${info.address.postcode}, ${info.address.country}`;
+            
         }
         dissply().then(() => displayPersonalInfo());
 
