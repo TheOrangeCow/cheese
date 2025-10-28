@@ -83,7 +83,7 @@ async function buy() {
         return;
     }
 
-    const data2 = await cost()
+    const data2 = await cost();
     
     const cart = data2.items.map(item => ({
         name: item.name,
@@ -96,35 +96,41 @@ async function buy() {
         { name: "Card Fee", price: data2.card_fee, quantity: 1 }
     );
 
+    // --- Create checkout session ---
     try {
         const res = await fetch(`${backendUrl}/create-session`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ cart })
         });
-        const data = await res.json();
-        if (data.url) window.location = data.url;
-        else alert("Error: " + data.error);
-      } catch (err) {
-        alert("Checkout bissie. Try again in a few seconds.");
+        const sessionData = await res.json();
+        if (sessionData.url) {
+            window.location = sessionData.url;
+        } else {
+            alert("Error: " + sessionData.error);
+        }
+    } catch (err) {
+        alert("Checkout issue. Try again in a few seconds.");
         console.error(err);
     }
 
-
-    const data = {
+    // --- Save personal info ---
+    const userData = {
         name: info.name,
         contact: info.contact,
-        address: "${info.address.line1}, ${info.address.postcode}, ${info.address.country}"
-      };
+        address: `${info.address.line1}, ${info.address.postcode}, ${info.address.country}`
+    };
 
     try {
-        const res = await fetch(backendURL2, {
+        const res2 = await fetch(backendURL2, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
+            body: JSON.stringify(userData)
         });
 
-        const result = await res.json();
-    
-    });
+        const result = await res2.json();
+        console.log("User info saved:", result);
+    } catch (err) {
+        console.error("Error saving user info:", err);
+    }
 }
