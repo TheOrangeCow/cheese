@@ -83,6 +83,26 @@ async function buy() {
         return;
     }
 
+    // --- Save personal info ---
+    const userData = {
+        name: info.name,
+        contact: info.contact,
+        address: `${info.address.line1}, ${info.address.postcode}, ${info.address.country}`
+    };
+
+    try {
+        const res2 = await fetch(backendURL2, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(userData)
+        });
+
+        const result = await res2.json();
+        console.log("User info saved:", result);
+    } catch (err) {
+        console.error("Error saving user info:", err);
+    }
+
     const data2 = await cost();
     
     const cart = data2.items.map(item => ({
@@ -114,23 +134,5 @@ async function buy() {
         console.error(err);
     }
 
-    // --- Save personal info ---
-    const userData = {
-        name: info.name,
-        contact: info.contact,
-        address: `${info.address.line1}, ${info.address.postcode}, ${info.address.country}`
-    };
-
-    try {
-        const res2 = await fetch(backendURL2, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(userData)
-        });
-
-        const result = await res2.json();
-        console.log("User info saved:", result);
-    } catch (err) {
-        console.error("Error saving user info:", err);
-    }
+    
 }
