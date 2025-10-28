@@ -72,14 +72,14 @@
       padding: 25px;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      width: 340px;
+      width: 360px;
     }
     label {
       display: block;
       margin-top: 10px;
       font-weight: bold;
     }
-    input {
+    input, select {
       width: 100%;
       padding: 8px;
       margin-top: 5px;
@@ -87,7 +87,7 @@
       border-radius: 5px;
       box-sizing: border-box;
     }
-    input:focus {
+    input:focus, select:focus {
       border-color: #0078ff;
       outline: none;
     }
@@ -132,20 +132,36 @@
 </head>
 <body>
   <form id="infoForm">
-    <label for="name">Name</label>
+    <label>Name</label>
     <input type="text" id="name" placeholder="John Smith" />
     <small id="nameError">Name must be at least 2 characters.</small>
 
-    <label for="contact">Email or Phone</label>
+    <label>Email or Phone</label>
     <input type="text" id="contact" placeholder="email@example.com or 07123456789" />
     <small id="contactError">Please enter a valid email or phone number.</small>
 
-    <label for="address">Address</label>
+    <label>Search Address</label>
     <div class="field">
-      <input type="text" id="address" placeholder="Start typing your address..." autocomplete="off" />
+      <input type="text" id="addressSearch" placeholder="Start typing your address..." autocomplete="off" />
       <div id="suggestions"></div>
     </div>
-    <small id="addressError">Please enter a valid address.</small>
+
+    <label>Address Line 1</label>
+    <input type="text" id="addressLine1" placeholder="123 Example Street" />
+    <small id="addressLine1Error">Address line 1 is required.</small>
+
+    <label>Postcode</label>
+    <input type="text" id="postcode" placeholder="e.g. SW1A 1AA" />
+    <small id="postcodeError">Please enter a valid postcode.</small>
+
+    <label>Country</label>
+    <select id="country">
+      <option value="United Kingdom" selected>United Kingdom</option>
+      <option value="United States">United States</option>
+      <option value="Canada">Canada</option>
+      <option value="Australia">Australia</option>
+      <option value="Other">Other</option>
+    </select>
 
     <button type="submit">Submit</button>
   </form>
@@ -153,13 +169,19 @@
   <script>
     const nameInput = document.getElementById("name");
     const contactInput = document.getElementById("contact");
-    const addressInput = document.getElementById("address");
+    const addressSearch = document.getElementById("addressSearch");
+    const addressLine1 = document.getElementById("addressLine1");
+    const postcode = document.getElementById("postcode");
+    const country = document.getElementById("country");
+
     const suggestionsBox = document.getElementById("suggestions");
 
     const nameError = document.getElementById("nameError");
     const contactError = document.getElementById("contactError");
-    const addressError = document.getElementById("addressError");
+    const addressLine1Error = document.getElementById("addressLine1Error");
+    const postcodeError = document.getElementById("postcodeError");
 
+    // --- Validation ---
     function validate(input) {
       if (input === nameInput) {
         nameError.style.display = nameInput.value.trim().length < 2 ? "block" : "none";
@@ -169,35 +191,46 @@
         const valid = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val) || /^\d{10,}$/.test(val);
         contactError.style.display = valid ? "none" : "block";
       }
-      if (input === addressInput) {
-        addressError.style.display = addressInput.value.trim().length < 5 ? "block" : "none";
+      if (input === addressLine1) {
+        addressLine1Error.style.display = addressLine1.value.trim().length < 3 ? "block" : "none";
+      }
+      if (input === postcode) {
+        postcodeError.style.display = postcode.value.trim().length < 4 ? "block" : "none";
       }
     }
 
-    nameInput.addEventListener("input", () => validate(nameInput));
-    contactInput.addEventListener("input", () => validate(contactInput));
+    [nameInput, contactInput, addressLine1, postcode].forEach(i => {
+      i.addEventListener("input", () => validate(i));
+    });
 
-    // Address autocomplete using OpenStreetMap (Nominatim)
+    // --- Address Autocomplete using OpenStreetMap ---
     let timeout;
-    addressInput.addEventListener("input", () => {
-      validate(addressInput);
+    addressSearch.addEventListener("input", () => {
       clearTimeout(timeout);
-      const query = addressInput.value.trim();
+      const query = addressSearch.value.trim();
       suggestionsBox.innerHTML = "";
       if (query.length < 3) return;
 
       timeout = setTimeout(async () => {
-        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=5`;
-        const response = await fetch(url, { headers: { "User-Agent": "MyAddressApp/1.0" } });
+        const url = `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=${encodeURIComponent(query)}&limit=5&countrycodes=gb`;
+        const response = await fetch(url, { headers: { "User-Agent": "MyApp/1.0" } });
         const results = await response.json();
         if (!results.length) return;
+
         results.forEach((r) => {
           const div = document.createElement("div");
           div.textContent = r.display_name;
           div.addEventListener("click", () => {
-            addressInput.value = r.display_name;
+            addressSearch.value = r.display_name;
             suggestionsBox.innerHTML = "";
-            validate(addressInput);
+
+            const addr = r.address;
+            addressLine1.value = (addr.house_number ? addr.house_number + " " : "") + (addr.road || "");
+            postcode.value = addr.postcode || "";
+            country.value = addr.country || "United Kingdom";
+
+            validate(addressLine1);
+            validate(postcode);
           });
           suggestionsBox.appendChild(div);
         });
@@ -205,27 +238,32 @@
     });
 
     document.addEventListener("click", (e) => {
-      if (!addressInput.contains(e.target)) suggestionsBox.innerHTML = "";
+      if (!addressSearch.contains(e.target)) suggestionsBox.innerHTML = "";
     });
 
+    // --- Submit ---
     document.getElementById("infoForm").addEventListener("submit", (e) => {
       e.preventDefault();
-      validate(nameInput);
-      validate(contactInput);
-      validate(addressInput);
+      [nameInput, contactInput, addressLine1, postcode].forEach(validate);
 
       if (
         nameError.style.display === "none" &&
         contactError.style.display === "none" &&
-        addressError.style.display === "none"
+        addressLine1Error.style.display === "none" &&
+        postcodeError.style.display === "none"
       ) {
         const userData = {
           name: nameInput.value,
           contact: contactInput.value,
-          address: addressInput.value,
+          address: {
+            search: addressSearch.value,
+            line1: addressLine1.value,
+            postcode: postcode.value,
+            country: country.value,
+          },
         };
         localStorage.setItem("userInfo", JSON.stringify(userData));
-        alert("Information saved to local storage!");
+        alert("Information saved successfully!");
       } else {
         alert("Please fix the errors before submitting.");
       }
