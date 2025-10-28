@@ -75,6 +75,13 @@ function ping(){
 
 async function buy() {
     const backendUrl = "https://cheese-backend-x01h.onrender.com";
+    const backendURL2 = "https://cheese-backend2.onrender.com/save-info";
+    const info = JSON.parse(localStorage.getItem("userInfo"));
+
+    if (!info || !info.name || !info.contact || !info.address) {
+        window.location.href = "personal_info.html";
+        return;
+    }
 
     const data2 = await cost()
     
@@ -103,15 +110,6 @@ async function buy() {
         console.error(err);
     }
 
-
-    const backendURL2 = "https://cheese-backend2.onrender.com/save-info";
-
-
-    const info = JSON.parse(localStorage.getItem("userInfo"));
-    if (!info || !info.name || !info.contact || !info.address) {
-        window.location.href = "personal_info.html";
-        return;
-    }
 
     const data = {
         name: info.name,
