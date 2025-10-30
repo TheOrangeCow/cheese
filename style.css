@@ -15,6 +15,7 @@
     --button-disabled-bg-color: #aaa;
     --footer-bg-color: white;
     --footer-text-color: #555;
+    --highlight-color: #ffee00;
 }
 
 /*Goloble*/
@@ -85,6 +86,29 @@ footer {
     margin: 20px auto;
     
 }
+
+/* social links*/
+.social-links {
+    margin-top: 10px;
+}
+
+.social-links a {
+    margin: 0 10px;
+    color: var(--footer-text-color);
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: var(--highlight-color);
+}
+
+/*Home*/
+.about, .newsletter{
+    text-align: center;
+    align-content: center;
+}
+
 
 /*Product box's*/
 .product-grid {
@@ -242,3 +266,4 @@ footer {
     color: #555;
     padding: 30px 0;
 }
+
