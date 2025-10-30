@@ -59,70 +59,134 @@
         &copy; 2025 Cheese factory. All rights reserved.
     </footer>
     <script src="buy.js"></script>
-    <script>
-        ping()
-        async function dissply() {
-            const data = await cost();
-            console.log(data)
-            const container = document.getElementById("list");
-            container.innerHTML = "";
+<script>
+ping();
 
-            // If error or no items
-            if (!data || data.error || !data.items || data.items.length === 0) {
-                container.innerHTML = '<p class="empty">Error: nothing in your basket</p>';
-                return;
-            }
+async function dissply() {
+    const data = await cost();
+    console.log(data);
+    const container = document.getElementById("list");
+    container.innerHTML = "";
 
-            let total_price = 0;
+    // If error or no items
+    if (!data || data.error || !data.items || data.items.length === 0) {
+        container.innerHTML = '<p class="empty">Error: nothing in your basket</p>';
+        return;
+    }
 
-            // Display each item
-            data.items.forEach(item => {
-                const row = document.createElement("div");
-                row.className = "basket-item";
-                row.innerHTML = `
-                    <div class="product-info">
-                        <p><strong>${item.name}</strong></p>
-                        <p>Quantity: ${item.quantity}</p>
-                        <p>Unit price: £${item.unit_price.toFixed(2)}</p>
-                        <p>Total: £${item.total_price.toFixed(2)}</p>
-                    </div>
-                `;
-                container.appendChild(row);
+    let total_price = 0;
 
-                total_price += item.total_price;
-            });
+    // Display each item
+    data.items.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "basket-item";
+        row.innerHTML = `
+            <div class="product-info">
+                <p><strong>${item.name}</strong></p>
+                <p>Quantity: ${item.quantity}</p>
+                <p>Unit price: £${item.unit_price.toFixed(2)}</p>
+                <p>Total: £${item.total_price.toFixed(2)}</p>
+            </div>
+        `;
+        container.appendChild(row);
+        total_price += item.total_price;
+    });
 
-            // Add totals
-            const summary = document.createElement("div");
-            summary.className = "basket-summary";
-            summary.innerHTML = `
-                <hr>
-                <p>Shipping: £${data.shipping.toFixed(2)}</p>
-                <p>Card transaction fee: £${data.card_fee.toFixed(2)}</p>
-                <h3>Total: £${data.total.toFixed(2)}</h3>
-                <button onclick="buy()">Buy now</button>
-            `;
-            container.appendChild(summary);
-        }
-        function displayPersonalInfo() {
-            const info = JSON.parse(localStorage.getItem("userInfo"));
-            if (!info || !info.name || !info.contact || !info.address) {
-                window.location.href = "personal_info.html";
-                
-                return; // make sure the rest doesn't run
-            }
+    // Add totals
+    const summary = document.createElement("div");
+    summary.className = "basket-summary";
+    summary.innerHTML = `
+        <hr>
+        <p>Shipping: £${data.shipping.toFixed(2)}</p>
+        <p>Card transaction fee: £${data.card_fee.toFixed(2)}</p>
+        <h3>Total: £${data.total.toFixed(2)}</h3>
+        <button id="buyBtn">Buy now</button>
+    `;
+    container.appendChild(summary);
 
-            document.getElementById("pi-name").textContent = `Name: ${info.name}`;
-            document.getElementById("pi-contact").textContent = `Contact: ${info.contact}`;
+    // Attach event listener after button is created
+    document.getElementById("buyBtn").addEventListener("click", handleBuyClick);
+}
 
-            
-            document.getElementById("pi-address").textContent = `Address: ${info.address.line1}, ${info.address.postcode}, ${info.address.country}`;
-            
-        }
-        dissply().then(() => displayPersonalInfo());
+// Prevent multiple sends and show loading box
+let isBuying = false;
 
+async function handleBuyClick() {
+    if (isBuying) return; // stop if already clicked
+    isBuying = true;
 
-    </script>
+    // Disable button
+    const btn = document.getElementById("buyBtn");
+    btn.disabled = true;
+    btn.textContent = "Processing...";
+
+    // Show loading overlay
+    const loadingBox = document.createElement("div");
+    loadingBox.style.position = "fixed";
+    loadingBox.style.top = "0";
+    loadingBox.style.left = "0";
+    loadingBox.style.width = "100vw";
+    loadingBox.style.height = "100vh";
+    loadingBox.style.background = "rgba(0,0,0,0.6)";
+    loadingBox.style.display = "flex";
+    loadingBox.style.justifyContent = "center";
+    loadingBox.style.alignItems = "center";
+    loadingBox.style.zIndex = "9999";
+    loadingBox.innerHTML = `
+        <div style="
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 1.2rem;
+            max-width: 300px;
+        ">
+            <p>⏳ Processing your order...</p>
+            <p>This will take less than a minute.</p>
+        </div>
+    `;
+    document.body.appendChild(loadingBox);
+
+    try {
+        await buy(); // your existing buy() function from buy.js
+        loadingBox.innerHTML = `
+            <div style="background:white;padding:30px;border-radius:12px;text-align:center;">
+                ✅ <strong>Order complete!</strong><br>Thank you for your purchase.
+            </div>`;
+        setTimeout(() => {
+            loadingBox.remove();
+            window.location.href = "thankyou.html"; // optional redirect
+        }, 2000);
+    } catch (err) {
+        console.error("Error:", err);
+        loadingBox.innerHTML = `
+            <div style="background:white;padding:30px;border-radius:12px;text-align:center;">
+                ❌ <strong>Something went wrong.</strong><br>Please try again.
+            </div>`;
+        setTimeout(() => loadingBox.remove(), 3000);
+    } finally {
+        isBuying = false;
+        btn.disabled = false;
+        btn.textContent = "Buy now";
+    }
+}
+
+function displayPersonalInfo() {
+    const info = JSON.parse(localStorage.getItem("userInfo"));
+    if (!info || !info.name || !info.contact || !info.address) {
+        window.location.href = "personal_info.html";
+        return;
+    }
+
+    document.getElementById("pi-name").textContent = `Name: ${info.name}`;
+    document.getElementById("pi-contact").textContent = `Contact: ${info.contact}`;
+    document.getElementById("pi-address").textContent =
+        `Address: ${info.address.line1}, ${info.address.postcode}, ${info.address.country}`;
+}
+
+dissply().then(() => displayPersonalInfo());
+</script>
+
 </body>
 
 </html>
