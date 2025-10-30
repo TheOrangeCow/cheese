@@ -21,6 +21,10 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
     background-color: var(--body-bg-color);
 }
 
@@ -76,12 +80,14 @@ footer {
     bottom: 0;
     left: 0;
     width: 100%;
+    flex: 1;
 }
 
 .container {
     width: 90%;
     max-width: 1200px;
     margin: 20px auto;
+    
 }
 
 /*Product box's*/
