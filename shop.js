@@ -64,7 +64,7 @@ async function loadProducts(container, options = { featuredOnly: false, override
 
 
             container.appendChild(productDiv);
-            const loadingBox = document.createElement("div");
+            cconst loadingBox = document.createElement("div");
             loadingBox.id = "loadingBox";
             loadingBox.style.position = "fixed";
             loadingBox.style.top = "0";
@@ -89,8 +89,14 @@ async function loadProducts(container, options = { featuredOnly: false, override
                 </div>
             `;
             document.body.appendChild(loadingBox);
-            setTimeout(() => {}, 1000); 
-            document.getElementById("loadingBox").remove();
+
+            setTimeout(() => {
+            loadingBox.style.transition = "opacity 0.5s ease";
+            loadingBox.style.opacity = "0";
+            setTimeout(() => loadingBox.remove(), 500);
+            }, 1000);
+
+
         });
 
     } catch (error) {
