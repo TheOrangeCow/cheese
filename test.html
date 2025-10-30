@@ -7,20 +7,20 @@
 
 <h3>To (customer)</h3>
 <div>
-<input id="to_name" placeholder="Name" value="Daniel Foster" />
-<input id="to_street1" placeholder="Street" value="22 Baker Street" />
-<input id="to_city" placeholder="City" value="London" />
-<input id="to_zip" placeholder="Postcode" value="W1U 3BW" />
-<input id="to_country" placeholder="Country (GB)" value="GB" />
+    <input id="to_name" placeholder="Name" value="Daniel Foster" />
+    <input id="to_street1" placeholder="Street" value="22 Baker Street" />
+    <input id="to_city" placeholder="City" value="London" />
+    <input id="to_zip" placeholder="Postcode" value="W1U 3BW" />
+    <input id="to_country" placeholder="Country (GB)" value="GB" />
 </div>
 
 
 <h3>Parcel</h3>
 <div>
-<input id="length" placeholder="length (cm)" value="20" />
-<input id="width" placeholder="width (cm)" value="15" />
-<input id="height" placeholder="height (cm)" value="5" />
-<input id="weight" placeholder="weight (g)" value="750" />
+    <input id="length" placeholder="length (cm)" value="20" />
+    <input id="width" placeholder="width (cm)" value="15" />
+    <input id="height" placeholder="height (cm)" value="5" />
+    <input id="weight" placeholder="weight (g)" value="750" />
 </div>
 
 
@@ -32,76 +32,77 @@
 
 
 <script>
-const apiBase = '' // same origin if you serve static via Flask; otherwise put full URL
+    const apiBase = '' // same origin if you serve static via Flask; otherwise put full URL
 
 
-document.getElementById('getRates').addEventListener('click', async () => {
-const payload = {
-from: {
-name: document.getElementById('from_name').value,
-street1: document.getElementById('from_street1').value,
-city: document.getElementById('from_city').value,
-zip: document.getElementById('from_zip').value,
-country: document.getElementById('from_country').value
-},
-to: {
-name: document.getElementById('to_name').value,
-street1: document.getElementById('to_street1').value,
-city: document.getElementById('to_city').value,
-zip: document.getElementById('to_zip').value,
-country: document.getElementById('to_country').value
-},
-parcel: {
-length: parseFloat(document.getElementById('length').value),
-width: parseFloat(document.getElementById('width').value),
-height: parseFloat(document.getElementById('height').value),
-weight: parseFloat(document.getElementById('weight').value) // grams in this sample
-}
-}
+    document.getElementById('getRates').addEventListener('click', async () => {
+        const payload = {
+            from: {
+                name: document.getElementById('from_name').value,
+                street1: document.getElementById('from_street1').value,
+                city: document.getElementById('from_city').value,
+                zip: document.getElementById('from_zip').value,
+                country: document.getElementById('from_country').value
+            },
+            to: {
+                name: document.getElementById('to_name').value,
+                street1: document.getElementById('to_street1').value,
+                city: document.getElementById('to_city').value,
+                zip: document.getElementById('to_zip').value,
+                country: document.getElementById('to_country').value
+            },
+            parcel: {
+                length: parseFloat(document.getElementById('length').value),
+                width: parseFloat(document.getElementById('width').value),
+                height: parseFloat(document.getElementById('height').value),
+                weight: parseFloat(document.getElementById('weight').value) // grams in this sample
+            }
+        }
 
 
-const res = await fetch(apiBase + '/api/estimate', {
-method: 'POST',
-headers: { 'Content-Type': 'application/json' },
-body: JSON.stringify(payload)
-})
-const data = await res.json()
-const ratesDiv = document.getElementById('rates')
-ratesDiv.innerHTML = ''
+        const res = await fetch(apiBase + '/api/estimate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        const data = await res.json()
+        const ratesDiv = document.getElementById('rates')
+        ratesDiv.innerHTML = ''
 
 
-if (!data.ok) {
-ratesDiv.textContent = 'Error: ' + (data.error || 'unknown')
-return
-}
+        if (!data.ok) {
+            ratesDiv.textContent = 'Error: ' + (data.error || 'unknown')
+            return
+        }
 
 
-window._shipment_id = data.shipment_id
+        window._shipment_id = data.shipment_id
 
 
-data.rates.forEach(r => {
-const el = document.createElement('div')
-el.className = 'rate'
-el.innerHTML = `<strong>${r.carrier} — ${r.service}</strong><br>Price: ${r.rate} ${r.currency}<br>ETA: ${r.est_delivery_days || 'n/a'} days<br>`
-const btn = document.createElement('button')
-btn.textContent = 'Buy'
-btn.addEventListener('click', async () => {
-const buyRes = await fetch(apiBase + '/api/buy', {
-method: 'POST',
-headers: {'Content-Type': 'application/json'},
-body: JSON.stringify({ shipment_id: window._shipment_id, rate_id: r.id })
-})
-const buyData = await buyRes.json()
-if (!buyData.ok) {
-alert('Buy error: ' + (buyData.error || ''))
-return
-}
-alert('Label bought. Tracking: ' + buyData.tracking_code + '\nLabel URL: ' + buyData.label_url)
-})
-el.appendChild(btn)
-ratesDiv.appendChild(el)
-})
-})
+        data.rates.forEach(r => {
+            const el = document.createElement('div')
+            el.className = 'rate'
+            el.innerHTML = `<strong>${r.carrier} — ${r.service}</strong><br>Price: ${r.rate} ${r.currency}<br>ETA: ${r.est_delivery_days || 'n/a'} days<br>`
+            const btn = document.createElement('button')
+            btn.textContent = 'Buy'
+            btn.addEventListener('click', async () => {
+                const buyRes = await fetch(apiBase + '/api/buy', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ shipment_id: window._shipment_id, rate_id: r.id })
+                })
+                const buyData = await buyRes.json()
+                if (!buyData.ok) {
+                    alert('Buy error: ' + (buyData.error || ''))
+                    return
+                }
+                alert('Label bought. Tracking: ' + buyData.tracking_code + '\nLabel URL: ' + buyData.label_url)
+            })
+            el.appendChild(btn)
+            ratesDiv.appendChild(el)
+        })
+    })
 </script>
 </body>
+
 </html>
