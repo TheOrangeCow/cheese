@@ -76,11 +76,7 @@ footer {
     background-color: var(--footer-bg-color);
     border-top: 1px solid var(--product-border-color);
     color: var(--footer-text-color);
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    flex: 1;
+
 }
 
 .container {

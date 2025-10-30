@@ -151,7 +151,7 @@ async function handleBuyClick() {
         await buy(); // your existing buy() function from buy.js
         loadingBox.innerHTML = `
             <div style="background:white;padding:30px;border-radius:12px;text-align:center;">
-                ✅ <strong>Order complete!</strong><br>Thank you for your purchase.
+                <strong>Order complete!</strong><br>Thank you for your purchase.
             </div>`;
         setTimeout(() => {
             loadingBox.remove();
@@ -160,7 +160,7 @@ async function handleBuyClick() {
         console.error("Error:", err);
         loadingBox.innerHTML = `
             <div style="background:white;padding:30px;border-radius:12px;text-align:center;">
-                ❌ <strong>Something went wrong.</strong><br>Please try again.
+                <strong>Something went wrong.</strong><br>Please try again.
             </div>`;
         setTimeout(() => loadingBox.remove(), 3000);
     } finally {
