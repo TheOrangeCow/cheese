@@ -97,6 +97,12 @@ select {
 
 }
 
+header h1 {
+    font-size: 1rem;
+    font-weight: normal;
+    margin: 0;
+    color: inherit;
+}
 /* social links*/
 .social-links {
     margin-top: 10px;
