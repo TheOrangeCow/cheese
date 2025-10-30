@@ -58,13 +58,14 @@ async function loadProducts(container, options = { featuredOnly: false, override
                 localStorage.setItem('cart', JSON.stringify(cart));
 
                 console.log(`${product.name} added to basket`);
+                alert("`${product.name} added to basket`")
                 const loadingBox = document.createElement("div");
 
             });
 
 
             container.appendChild(productDiv);
-            alert("`${product.name} added to basket`")
+            
 
 
         });
