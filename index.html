@@ -1,78 +1,74 @@
 <!-- Follow the in-page instructions to change this file -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Change this to what you whant (This dissplys at tab)-->
     <title>Cheese Factory | Artisan Cheeses & Seasonal Flavors</title>
-    <meta name="description" content="Discover Cheese Factory’s handmade artisan cheeses, new seasonal flavors, and gift boxes. Freshly crafted and delivered to your door.">
-    <meta name="keywords" content="Cheese Factory, artisan cheese, seasonal cheese, buy cheese online, British cheese, handmade dairy products">
+    <!--Add a disscription this is what appers on the google page-->
+    <meta name="description"
+        content="Discover Cheese Factory’s handmade artisan cheeses, new seasonal flavors, and gift boxes. Freshly crafted and delivered to your door.">
+    <!--This is key words helps your seach apperance-->
+    <meta name="keywords"
+        content="Cheese Factory, artisan cheese, seasonal cheese, buy cheese online, British cheese, handmade dairy products">
+    <!--This link links to your home page (yourbissness.github.io)-->
     <link rel="canonical" href="https://theorangecow.github.io/cheese/">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="https://theorangecow.github.io/cheese/images/logo/logo.ico">
 </head>
+
 <body>
     <header>
-        <h1>Cheese Factory</h1>
+        <!--The title at the top of the page-->
+        Cheese Factory
     </header>
 
     <nav>
+        <!--This is the nav bar if you change something here you have to change it in every file-->
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="products.html">Products</a>
         <a href="contact.html">Contact</a>
         <a href="basket.html">Basket</a>
-        <a href="personal_info.html">Personal info</a>
     </nav>
 
-    <!-- 🧀 HERO SECTION -->
-    <section class="hero">
-        <img src="https://theorangecow.github.io/cheese/images/hero/cheese-display.jpg" alt="Selection of handmade artisan cheeses" class="hero-img">
-        <div class="hero-text">
-            <h2>Handcrafted Artisan Cheeses</h2>
-            <p>From creamy brie to bold blue, explore our award-winning range made with love and tradition.</p>
-            <a href="products.html" class="btn">Shop Now</a>
-        </div>
-    </section>
-
-    <!-- 🌸 PROMOTIONS / SEASONAL SECTION -->
-    <section class="promo">
-        <h2>New Seasonal Flavors!</h2>
-        <p>Try our limited-edition <strong>Spring Garden Brie</strong> and <strong>Smoked Honey Gouda</strong> – available this month only.</p>
-        <a href="products.html" class="btn-secondary">View Seasonal Range</a>
-    </section>
-
-    <!-- 🧀 FEATURED PRODUCTS -->
     <div class="container">
+        <div class="Featured"></div>
         <h2>Featured Products</h2>
         <div class="product-grid" id="home-products"></div>
     </div>
 
-    <!-- 🧑‍🌾 ABOUT SECTION -->
-    <section class="about">
+    <div class="about">
+        <!--Change this to your story-->
         <h2>About Cheese Factory</h2>
-        <p>We’re a family-run dairy crafting artisan cheeses in the heart of the countryside since 1985. Every wheel is made by hand using local milk and traditional techniques, ensuring the finest taste and texture.</p>
-        <p>From our creamy cheddar to our adventurous seasonal blends, every bite supports sustainable farming and British craftsmanship.</p>
-        <a href="about.html" class="btn">Learn More</a>
-    </section>
+        <p>We’re a family-run dairy crafting artisan cheeses in the heart of the countryside since 1985. Every wheel
+            is made by hand using local milk and traditional techniques, ensuring the finest taste and texture.</p>
+        <p>From our creamy cheddar to our adventurous seasonal blends, every bite supports sustainable farming and
+            British craftsmanship.</p>
+        <button href="about.html">Learn More</button>
+    </div>
 
-    <!-- 📨 NEWSLETTER SIGNUP -->
-    <section class="newsletter">
+    <div class="newsletter">
+        
+        <h1>This feachore dose not work</h1>
         <h2>Join Our Cheese Lovers Club</h2>
-        <p>Get 10% off your first order and be the first to know about new flavors and special offers!</p>
+        <p>Be the first to know about new flavors and special offers!</p>
         <form id="newsletter-form">
             <input type="email" id="newsletter-email" placeholder="Enter your email address" required>
             <button type="submit">Subscribe</button>
         </form>
-        <p id="newsletter-message" style="display:none;">Thanks for joining! 🧀</p>
-    </section>
-
-    <!-- ⚙️ FOOTER -->
+        <p id="newsletter-message" style="display:none;">Thanks for joining!</p>
+    </div>
+    </div>
     <footer>
         <div class="footer-content">
+            <!--Change this to your company-->
             <p>&copy; 2025 Cheese Factory. All rights reserved.</p>
             <p>📍 Made with love in the UK | <a href="contact.html">Contact Us</a></p>
             <div class="social-links">
+                <!--Add your links were the # are-->
                 <a href="#" aria-label="Instagram">Instagram</a> |
                 <a href="#" aria-label="Facebook">Facebook</a> |
                 <a href="#" aria-label="TikTok">TikTok</a>
@@ -82,11 +78,9 @@
 
     <script src="shop.js"></script>
     <script>
-        // Load featured products dynamically
         const homeContainer = document.getElementById('home-products');
         loadProducts(homeContainer, { featuredOnly: true });
 
-        // Newsletter form handler
         const form = document.getElementById('newsletter-form');
         form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -95,4 +89,5 @@
         });
     </script>
 </body>
+
 </html>
