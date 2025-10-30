@@ -64,7 +64,7 @@ async function loadProducts(container, options = { featuredOnly: false, override
 
 
             container.appendChild(productDiv);
-            cconst loadingBox = document.createElement("div");
+            const loadingBox = document.createElement("div");
             loadingBox.id = "loadingBox";
             loadingBox.style.position = "fixed";
             loadingBox.style.top = "0";
