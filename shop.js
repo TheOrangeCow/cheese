@@ -58,10 +58,39 @@ async function loadProducts(container, options = { featuredOnly: false, override
                 localStorage.setItem('cart', JSON.stringify(cart));
 
                 console.log(`${product.name} added to basket`);
+                const loadingBox = document.createElement("div");
+
             });
 
 
             container.appendChild(productDiv);
+            const loadingBox = document.createElement("div");
+            loadingBox.id = "loadingBox";
+            loadingBox.style.position = "fixed";
+            loadingBox.style.top = "0";
+            loadingBox.style.left = "0";
+            loadingBox.style.width = "100vw";
+            loadingBox.style.height = "100vh";
+            loadingBox.style.background = "rgba(0,0,0,0.6)";
+            loadingBox.style.display = "flex";
+            loadingBox.style.justifyContent = "center";
+            loadingBox.style.alignItems = "center";
+            loadingBox.style.zIndex = "9999";
+            loadingBox.innerHTML = `
+                <div style="
+                    background: white;
+                    padding: 30px;
+                    border-radius: 12px;
+                    text-align: center;
+                    font-size: 1.2rem;
+                    max-width: 300px;
+                ">
+                    <p>Added to your basket</p>
+                </div>
+            `;
+            document.body.appendChild(loadingBox);
+            setTimeout(() => {}, 1000); 
+            document.getElementById("loadingBox").remove();
         });
 
     } catch (error) {
