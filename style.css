@@ -132,8 +132,6 @@ header h1 {
     text-align: center;
     border: 1px solid var(--border-color);
     transition: 0.3s;
-    max-width: 401.797px;
-    position: relative;
 }
 
 
