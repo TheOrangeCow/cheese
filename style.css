@@ -98,11 +98,12 @@ select {
 }
 
 header h1 {
-    font-size: 3rem;
+    color: var(--header-text-color);
+    text-align: center;
+    font-size: 32px;
     font-weight: bold;
-    margin: 0;
-    color: inherit;
 }
+
 
 /* social links*/
 .social-links {
