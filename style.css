@@ -349,3 +349,8 @@ header h1 {
 .product-details p {
     line-height: 1.6;
 }
+
+.quantity-box{
+    border: var(--border-color);
+    border-radius: 5px;
+}

@@ -80,9 +80,9 @@
                         <div class="price">£${product.price.toFixed(2)}</div>
                         <p>${product.description}</p>
                         <div class="quantity-box">
-                            <button id="decrease" class="qty-btn">−</button>
+                            <button id="decrease" class="qty-btn" ${!product.in_stock ? 'disabled' : ''}>−</button>
                             <span id="quantity">1</span>
-                            <button id="increase" class="qty-btn">+</button>
+                            <button id="increase" class="qty-btn" ${!product.in_stock ? 'disabled' : ''}>+</button>
                         </div><br>
                         <button id = "add-to-basket" ${!product.in_stock ? 'disabled' : ''}>Add to Basket</button>
                     </div>
