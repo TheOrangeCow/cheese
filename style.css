@@ -271,7 +271,7 @@ header h1 {
     border-radius: 20px;
     padding: 6px 14px;
     cursor: pointer;
-    max-width: 10px;
+    max-width: 50px;
     text-align: center;
 }
 
