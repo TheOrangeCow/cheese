@@ -75,7 +75,7 @@ function ping(){
 
 async function buy() {
     const backendUrl = "https://cheese-backend-x01h.onrender.com";
-    const backendURL2 = "https://cheese-backend2.onrender.com/save-info";
+    const backendURL2 = "https://cheese-backend2.onrender.com/shipping";
     const info = JSON.parse(localStorage.getItem("userInfo"));
 
     if (!info || !info.name || !info.contact || !info.address) {
