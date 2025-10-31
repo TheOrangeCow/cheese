@@ -19,6 +19,7 @@
     --dot-color: #f5f5f5;
     --dot-color-active: #4285F4;
     --text-color: #333;
+    --deleet: #e53935;
 }
 
 /*Goloble*/
@@ -383,5 +384,68 @@ header h1 {
     text-align: center;
     font-size: 1rem;
     font-weight: bold;
+    color: var(--text-color);
+}
+
+/*Buy.html*/
+.checkout-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.basket-container {
+    flex: 2;
+}
+
+.personal-info {
+    flex: 1;
+    background: #f7f7f7;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/*basket*/
+
+.delete-btn:hover {
+    background: var(--deleet);
+}
+
+.quantity-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 2px solid var(--border-color);
+    border-radius: 50px;
+    padding: 8px 15px;
+    margin: 15px 0;
+    background: none;
+}
+
+.qty-btn {
+    background: none;
+    border: none;
+    color: #000000;
+    font-size: 20px;
+    width: 28px;
+    height: 28px;
+    line-height: 1;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.qty-btn:hover {
+    background: none;
+    color: var(--text-color);
+}
+
+#quantity {
+    min-width: 24px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
     color: var(--text-color);
 }
