@@ -372,7 +372,7 @@ header h1 {
 
 .qty-btn:hover,
 .qty-btn:focus {
-    background: none;
+    background: none !important;
     color: var(--text-color);
     outline: none;
 }
