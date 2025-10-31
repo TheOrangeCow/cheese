@@ -350,7 +350,38 @@ header h1 {
     line-height: 1.6;
 }
 
-.quantity-box{
-    border: var(--border-color);
-    border-radius: 5px;
+.quantity-box {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--product-border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 4px 8px;
+    background-color: var(--background-color);
+}
+
+.qty-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 6px 10px;
+    color: var(--text-color);
+    transition: none;
+}
+
+.qty-btn:hover,
+.qty-btn:focus {
+    background: none;
+    color: var(--text-color);
+    outline: none;
+}
+
+#quantity {
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text-color);
 }
