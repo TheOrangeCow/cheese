@@ -457,6 +457,7 @@ header h1 {
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 360px;
+    align-self: center;
 }
 
 .plabel {
@@ -470,41 +471,44 @@ header h1 {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
     border-radius: 5px;
     box-sizing: border-box;
 }
 
 .pinput:focus,
 .pselect:focus {
-    border-color: #0078ff;
+    border-color: var(--button-hover-bg-color);
     outline: none;
 }
 
 .psmall {
-    color: red;
+    color: var(--deleet);
     display: none;
     font-size: 13px;
 }
 
- #suggestions {
-      background: #fff;
-      border: 1px solid #ccc;
-      border-top: none;
-      max-height: 150px;
-      overflow-y: auto;
-      border-radius: 0 0 5px 5px;
-      position: absolute;
-      width: calc(100% - 20px);
-      z-index: 10;
-    }
-    #suggestions div {
-      padding: 6px;
-      cursor: pointer;
-    }
-    #suggestions div:hover {
-      background: #f0f0f0;
-    }
-        .field {
-      position: relative;
-    }
+#suggestions {
+    background: none;
+    border: 1px solid var(--border-color);
+    border-top: none;
+    max-height: 150px;
+    overflow-y: auto;
+    border-radius: 0 0 5px 5px;
+    position: absolute;
+    width: calc(100% - 20px);
+    z-index: 10;
+}
+
+#suggestions div {
+    padding: 6px;
+    cursor: pointer;
+}
+
+#suggestions div:hover {
+    background: var(--border-color);
+}
+
+.field {
+    position: relative;
+}
