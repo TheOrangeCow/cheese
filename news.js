@@ -1,17 +1,11 @@
-
-const form = document.getElementById('newsletter-form');
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
+async function news() {
     const backendURL2 = "https://cheese-backend2.onrender.com/news";
     const info = document.getElementById("newsletter-email");
-    //if (!info || info ) {
-    //    window.location.href = "personal_info.html";
-    //    return;
-    //}
+
     const userData = {
-        email: info.value, 
+        email: info.value.trim(),
     };
+
     try {
         const res2 = await fetch(backendURL2, {
             method: "POST",
@@ -21,12 +15,17 @@ form.addEventListener('submit', (e) => {
 
         const result = await res2.json();
         console.log("Added to news", result);
+
+        // Show confirmation message
         document.getElementById('newsletter-message').style.display = 'block';
     } catch (err) {
         console.error("Error saving user info:", err);
     }
+}
 
-
-    
+const form = document.getElementById('newsletter-form');
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    await news();
     form.reset();
 });
