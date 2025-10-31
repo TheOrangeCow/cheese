@@ -449,3 +449,62 @@ header h1 {
     font-weight: 600;
     color: var(--text-color);
 }
+
+/*info*/
+.pform {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 360px;
+}
+
+.plabel {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.pinput,
+.pselect {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.pinput:focus,
+.pselect:focus {
+    border-color: #0078ff;
+    outline: none;
+}
+
+.psmall {
+    color: red;
+    display: none;
+    font-size: 13px;
+}
+
+ #suggestions {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-top: none;
+      max-height: 150px;
+      overflow-y: auto;
+      border-radius: 0 0 5px 5px;
+      position: absolute;
+      width: calc(100% - 20px);
+      z-index: 10;
+    }
+    #suggestions div {
+      padding: 6px;
+      cursor: pointer;
+    }
+    #suggestions div:hover {
+      background: #f0f0f0;
+    }
+        .field {
+      position: relative;
+    }

@@ -1,170 +1,90 @@
-<!--DOCTYPE html>
-<html>
-<head>
-  <title>Shipping Info</title>
-</head>
-<body>
-  <h2>Enter your shipping information</h2>
-
-  <form id="shippingForm">
-    <label>Name:</label><br>
-    <input type="text" id="name" required><br><br>
-
-    <label>Email or Phone:</label><br>
-    <input type="text" id="contact" required><br><br>
-
-    <label>Address:</label><br>
-    <textarea id="address" required></textarea><br><br>
-
-    <button type="submit">Submit</button>
-  </form>
-
-  <p id="result"></p>
-
-  <script>
-    // Change this to your deployed backend URL
-    const backendURL = "https://cheese-backend2.onrender.com/save-info";
-
-    document.getElementById("shippingForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const data = {
-        name: document.getElementById("name").value,
-        contact: document.getElementById("contact").value,
-        address: document.getElementById("address").value
-      };
-
-      try {
-        const res = await fetch(backendURL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        });
-
-        const result = await res.json();
-        document.getElementById("result").innerText =
-          result.success ? "✅ Info saved!" : " Error saving info.";
-      } catch (err) {
-        document.getElementById("result").innerText = " Connection error.";
-      }
-    });
-  </script>
-</body>
-</html-->
-
+<!-- Follow the in-page instructions to change this file -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Personal Info Form</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f6f7;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    form {
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      width: 360px;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-    input, select {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-    }
-    input:focus, select:focus {
-      border-color: #0078ff;
-      outline: none;
-    }
-    small {
-      color: red;
-      display: none;
-      font-size: 13px;
-    }
-    #suggestions {
-      background: #fff;
-      border: 1px solid #ccc;
-      border-top: none;
-      max-height: 150px;
-      overflow-y: auto;
-      border-radius: 0 0 5px 5px;
-      position: absolute;
-      width: calc(100% - 20px);
-      z-index: 10;
-    }
-    #suggestions div {
-      padding: 6px;
-      cursor: pointer;
-    }
-    #suggestions div:hover {
-      background: #f0f0f0;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 15px;
-      background: #0078ff;
-      border: none;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    .field {
-      position: relative;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--Change this to what you whant (This dissplys at tab)-->
+  <title>Cheese Factory | Info form</title>
+  <!--Add a disscription this is what appers on the google page-->
+  <meta name="description"
+    content="Discover Cheese Factory’s handmade artisan cheeses, new seasonal flavors, and gift boxes. Freshly crafted and delivered to your door.">
+  <!--This is key words helps your seach apperance-->
+  <meta name="keywords"
+    content="Cheese Factory, artisan cheese, seasonal cheese, buy cheese online, British cheese, handmade dairy products">
+  <!--This link links to your home page (yourbissness.github.io)-->
+  <link rel="canonical" href="https://theorangecow.github.io/cheese/">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="https://theorangecow.github.io/cheese/images/logo/logo.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
+
 <body>
-  <form id="infoForm">
-    <label>Name</label>
-    <input type="text" id="name" placeholder="John Smith" />
-    <small id="nameError">Name must be at least 2 characters.</small>
+  <header>
+    <!--The title at the top of the page-->
+    <h1>Cheese Factory</h1>
+  </header>
 
-    <label>Email or Phone</label>
-    <input type="text" id="contact" placeholder="email@example.com or 07123456789" />
-    <small id="contactError">Please enter a valid email or phone number.</small>
+  <nav>
+    <!--This is the nav bar if you change something here you have to change it in every file-->
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="products.html">Products</a>
+    <a href="contact.html">Contact</a>
+    <a href="basket.html">Basket</a>
+  </nav>
+  <div class="container">
+    <form class="pform" id="infoForm">
+      <label class="plabel">Name</label>
+      <input class="pinput" type="text" id="name" placeholder="John Smith" />
+      <small class="psmall" id="nameError">Name must be at least 2 characters.</small>
 
-    <label>Search Address</label>
-    <div class="field">
-      <input type="text" id="addressSearch" placeholder="Start typing your address..." autocomplete="off" />
-      <div id="suggestions"></div>
+      <label class="plabel">Email or Phone</label>
+      <input class="pinput" type="text" id="contact" placeholder="email@example.com or +447123456789" />
+      <small class="psmall" id="contactError">Please enter a valid email or phone number.</small>
+
+      <label class="plabel">Search Address</label>
+      <div class="field">
+        <input class="pinput" type="text" id="addressSearch" placeholder="Search for your address...(Not required)"
+          autocomplete="off" />
+        <div id="suggestions"></div>
+      </div>
+
+      <label class="plabel">Address Line 1</label>
+      <input class="pinput" class="pinput" type="text" id="addressLine1" placeholder="123 Example Street" />
+      <small class="psmall" id="addressLine1Error">Address line 1 is required.</small>
+
+      <label class="plabel">Postcode</label>
+      <input class="pinput" type="text" id="postcode" placeholder="e.g. SW1A 1AA" />
+      <small class="psmall" id="postcodeError">Please enter a valid postcode.</small>
+
+      <label class="plabel">Country</label>
+      <select class="pselect" id="country">
+        <option value="United Kingdom" selected>United Kingdom</option>
+        <option value="United States">United States</option>
+        <option value="Canada">Canada</option>
+        <option value="Australia">Australia</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <br>
+  <footer>
+    <!--Change this to your company (You have to change this one every page)-->
+    <p>&copy; 2025 Cheese Factory. All rights reserved.</p>
+    <p>Made with love in the UK | <a href="contact.html">Contact Us</a></p>
+    <div class="social-links">
+      <!--Add your link were the _blank  (/@bob for tiktok) -->
+      <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+      <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://x.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="https://tiktok.com" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
     </div>
-
-    <label>Address Line 1</label>
-    <input type="text" id="addressLine1" placeholder="123 Example Street" />
-    <small id="addressLine1Error">Address line 1 is required.</small>
-
-    <label>Postcode</label>
-    <input type="text" id="postcode" placeholder="e.g. SW1A 1AA" />
-    <small id="postcodeError">Please enter a valid postcode.</small>
-
-    <label>Country</label>
-    <select id="country">
-      <option value="United Kingdom" selected>United Kingdom</option>
-      <option value="United States">United States</option>
-      <option value="Canada">Canada</option>
-      <option value="Australia">Australia</option>
-      <option value="Other">Other</option>
-    </select>
-
-    <button type="submit">Submit</button>
-  </form>
+  </footer>
 
   <script>
     const nameInput = document.getElementById("name");
@@ -188,7 +108,7 @@
       }
       if (input === contactInput) {
         const val = contactInput.value.trim();
-        const valid = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val) || /^\d{10,}$/.test(val);
+        const valid = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val) || /^\+\d{7,15}$/.test(val);
         contactError.style.display = valid ? "none" : "block";
       }
       if (input === addressLine1) {
@@ -270,4 +190,5 @@
     });
   </script>
 </body>
+
 </html>
