@@ -56,7 +56,7 @@
             <p>Be the first to know about new flavors and special offers!</p>
             <form id="newsletter-form">
                 <input type="email" id="newsletter-email" placeholder="Enter your email address" required>
-                <button type="submit">Subscribe</button>
+                <button type="submit" on>Subscribe</button>
             </form>
             <p id="newsletter-message" style="display:none;">Thanks for joining!</p>
         </div>
@@ -81,12 +81,7 @@
         const homeContainer = document.getElementById('home-products');
         loadProducts(homeContainer, { featuredOnly: true });
 
-        const form = document.getElementById('newsletter-form');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            document.getElementById('newsletter-message').style.display = 'block';
-            form.reset();
-        });
+        
     </script>
 </body>
 
