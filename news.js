@@ -29,3 +29,15 @@ form.addEventListener('submit', async (e) => {
     await news();
     form.reset();
 });
+
+function ping2(){
+    const backendUrl = "https://cheese-backend2.onrender.com/ping";
+    window.addEventListener("load", async () => {
+        try {
+            await fetch(`${backendUrl}/ping`);
+            console.log("Backend ping successful — service is awake.");
+        } catch (err) {
+            console.warn("Backend ping failed. Service may be asleep or unreachable.");
+        }
+    });
+}
