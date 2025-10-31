@@ -128,7 +128,8 @@ header h1 {
 /*Home*/
 .about,
 .newsletter,
-.featured {
+.featured,
+.contact {
     text-align: center;
     align-content: center;
     background-color: var(--product-bg-color);
