@@ -1,98 +1,59 @@
+<!-- Follow the in-page instructions to change this file -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--Chenge the title-->
-    <title>Cheese Factory</title>
+    <!--Change this to what you whant (This dissplys at tab)-->
+    <title>Cheese Factory | </title>
+    <!--Add a disscription this is what appers on the google page-->
+    <meta name="description"
+        content="Discover Cheese Factory’s handmade artisan cheeses, new seasonal flavors, and gift boxes. Freshly crafted and delivered to your door.">
+    <!--This is key words helps your seach apperance-->
+    <meta name="keywords"
+        content="Cheese Factory, artisan cheese, seasonal cheese, buy cheese online, British cheese, handmade dairy products">
+    <!--This link links to your home page (yourbissness.github.io)-->
+    <link rel="canonical" href="https://theorangecow.github.io/cheese/">
     <link rel="stylesheet" href="style.css">
-    <style>
-        :root {
-            --dot-color: #f5f5f5;
-            --dot-color-active: #4285F4;
-        }
-
-        .product {
-            position: relative;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .product-images {
-            text-align: center;
-            position: relative;
-        }
-
-        .product-images img {
-            max-width: 100%;
-            height: 400px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .dots {
-            text-align: center;
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .dot {
-            height: 12px;
-            width: 12px;
-            margin: 0 4px;
-            background-color: var(--dot-color);
-            border-radius: 50%;
-            display: inline-block;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .dot.active {
-            background-color: var(--dot-color-active);
-        }
-
-        .product-details h2 {
-            color: #4285F4;
-            margin-top: 20px;
-        }
-
-        .product-details p {
-            line-height: 1.6;
-        }
-    </style>
+    <link rel="icon" type="image/x-icon" href="https://theorangecow.github.io/cheese/images/logo/logo.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
     <header>
-        <!--Chenge the title-->
-        Cheese factory
+        <!--The title at the top of the page-->
+        <h1>Cheese Factory</h1>
     </header>
+
     <nav>
+        <!--This is the nav bar if you change something here you have to change it in every file-->
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="products.html">Products</a>
         <a href="contact.html">Contact</a>
         <a href="basket.html">Basket</a>
-        <a href="personal_info.html">Personal info</a>
     </nav>
-
 
     <div class="container" id="product-container">
         <p>Loading product...</p>
     </div>
 
-    <script>
+    <br>
+        <footer>
+            <!--Change this to your company (You have to change this one every page)-->
+            <p>&copy; 2025 Cheese Factory. All rights reserved.</p>
+            <p>Made with love in the UK | <a href="contact.html">Contact Us</a></p>
+            <div class="social-links">
+                <!--Add your link were the _blank  (/@bob for tiktok) -->
+                <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://x.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://tiktok.com" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </footer>
 
+    <script>
         async function loadProduct() {
             const params = new URLSearchParams(window.location.search);
             const productId = parseInt(params.get('id'), 10);
@@ -109,8 +70,8 @@
                 const container = document.getElementById('product-container');
 
                 container.innerHTML = `
-                    ${!product.in_stock ? '<span class="out-of-stock-text">Out of Stock</span>' : ''}
                     <div class="product-images">
+                        ${!product.in_stock ? '<span class="out-of-stock-text">Out of Stock</span>' : ''}
                         <img id="product-image" src="${Array.isArray(product.image) ? product.image[0] : product.image}" alt="${product.name}">
                         <div class="dots" id="dots-container"></div>
                     </div>
@@ -205,7 +166,7 @@
                 });
 
                 // ------------------- Add to Basket -------------------
-                
+
 
                 const button = container.querySelector('#add-to-basket');
                 const quantityDisplay = container.querySelector('#quantity');
@@ -226,7 +187,7 @@
                 button.addEventListener('click', (e) => {
                     e.stopPropagation();
 
-                
+
 
                     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -265,12 +226,12 @@
                     document.body.appendChild(loadingBox);
 
                     setTimeout(() => {
-                    loadingBox.style.transition = "opacity 0.5s ease";
-                    loadingBox.style.opacity = "0";
-                    setTimeout(() => loadingBox.remove(), 500);
+                        loadingBox.style.transition = "opacity 0.5s ease";
+                        loadingBox.style.opacity = "0";
+                        setTimeout(() => loadingBox.remove(), 500);
                     }, 1000);
                 });
-                
+
 
 
             } catch (error) {
@@ -282,11 +243,6 @@
         loadProduct();
     </script>
 
-    </script>
-
-    <footer>
-        © 2025 Cheese factory. All rights reserved.
-    </footer>
 </body>
 
 </html>
