@@ -85,8 +85,8 @@ async function buy() {
 
     // --- Save personal info ---
 
-    const cart = JSON.parse(localStorage.getItem("cart"));
-    const itemIds = cart.map(item => item.id);
+    const cart2 = JSON.parse(localStorage.getItem("cart"));
+    const itemIds = cart2.map(item => item.id);
     const itams = itemIds.join(",");
 
     const userData = {

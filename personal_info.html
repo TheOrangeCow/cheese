@@ -68,6 +68,15 @@
       <option value="Australia">Australia</option>
       <option value="Other">Other</option>
     </select>
+    <label for="cardType">Select your card type:</label>
+    <select id="card">
+      <option value="standard_uk">Standard UK Card</option>
+      <option value="premium_uk">Premium UK Card</option>
+      <option value="eea">European Card (EEA)</option>
+      <option value="international">International Card</option>
+      <option value="bank_transfer">Bank Transfer</option>
+      <option value="klarna">Klarna</option>
+    </select>
     <br>
     <button type="submit">Submit</button>
   </form>
@@ -92,6 +101,7 @@
     const addressLine1 = document.getElementById("addressLine1");
     const postcode = document.getElementById("postcode");
     const country = document.getElementById("country");
+    const card = document.getElementById("card");
 
     const suggestionsBox = document.getElementById("suggestions");
 
@@ -179,6 +189,7 @@
             line1: addressLine1.value,
             postcode: postcode.value,
             country: country.value,
+            card: card
           },
         };
         localStorage.setItem("userInfo", JSON.stringify(userData));
