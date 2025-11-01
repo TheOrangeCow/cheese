@@ -42,9 +42,19 @@ async function cost(){
         const shipping = shippingcost();
         total_price += shipping;
 
-        let card_payment = (total_price * 0.015) + 0.2;
+        const info = JSON.parse(localStorage.getItem("userInfo"));
+        if (!info || !info.name || !info.contact || !info.address) {
+            window.location.href = "personal_info.html";
+            return;
+        }
+        if (info.address.country == "United Kingdom"){
+            let card_payment = (total_price * 0.019) + 0.2;
+        }else{
+            let card_payment = (total_price * 0.0325) + 0.2;
+        }
         card_payment = Math.ceil(card_payment * 100) / 100;
         total_price += card_payment;
+        
 
         const result = {
             items,
