@@ -84,9 +84,15 @@ async function buy() {
     }
 
     // --- Save personal info ---
+
+    const cart = JSON.parse(localStorage.getItem("cart"));
+    const itemIds = cart.map(item => item.id);
+    const itams = itemIds.join(",");
+
     const userData = {
         name: info.name,
         contact: info.contact,
+        itams: itams,
         address: `${info.address.line1}, ${info.address.postcode}, ${info.address.country}`
     };
 
