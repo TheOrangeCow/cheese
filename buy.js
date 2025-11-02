@@ -47,10 +47,11 @@ async function cost(){
             window.location.href = "personal_info.html";
             return;
         }
+        let card_payment;
         if (info.address.country == "United Kingdom"){
-            let card_payment = (total_price * 0.019) + 0.2;
+            card_payment = (total_price * 0.019) + 0.2;
         }else{
-            let card_payment = (total_price * 0.0325) + 0.2;
+            card_payment = (total_price * 0.0325) + 0.2;
         }
         card_payment = Math.ceil(card_payment * 100) / 100;
         total_price += card_payment;
