@@ -98,6 +98,7 @@ select {
     width: 90%;
     max-width: 1200px;
     margin: 20px auto;
+    flex: 1;
 
 }
 
@@ -309,6 +310,7 @@ header h1 {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
 }
 
 .product-images {
