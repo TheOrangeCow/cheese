@@ -85,6 +85,11 @@ footer {
 
 }
 
+body:not(.has-scroll) footer {
+    bottom: 0;
+    left: 0;
+}
+
 input,
 select {
     width: 30%;
