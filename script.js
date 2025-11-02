@@ -6,5 +6,10 @@ function checkScroll() {
         document.querySelector('footer').style.display = 'block';
   }
 }
-window.addEventListener('load', checkScroll);
+window.addEventListener('load', () => {
+    requestAnimationFrame(() => {
+        checkScroll();
+    });
+});
+
 window.addEventListener('resize', checkScroll);
