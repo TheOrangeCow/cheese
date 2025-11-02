@@ -98,7 +98,7 @@
                         console.error("Error saving user info:", err);
                     }
 
-                    document.getElementById("message").textContent = "Payment confirmed — you just paid!";
+                    document.getElementById("message").textContent = "Payment confirmed.";
                     localStorage.removeItem("cart");
                 } else {
                     document.getElementById("message").textContent = "Error verifying payment. Contact us";

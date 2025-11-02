@@ -75,7 +75,8 @@ button:disabled {
 }
 
 footer {
-    width: 96%;
+    display: none;
+    width: 100%;
     text-align: center;
     padding: 20px;
     background-color: var(--footer-bg-color);
@@ -88,6 +89,7 @@ body:not(.has-scroll) footer {
     position: fixed;
     bottom: 0;
     left: 0;
+    display: block;
 }
 
 
