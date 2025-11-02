@@ -36,8 +36,7 @@
     </nav>
     <div class="container">
         <div class="about">
-            <h1>Success</h1>
-            <p>Thank you for buying</p>
+            <h1 id="message"></h1>
             <a href = "index.html">Go home</a>
         </div>
         <br>
@@ -55,7 +54,63 @@
             <a href="https://tiktok.com" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
         </div>
     </footer>
+    <script>
+        <h1 id="message"></h1>
 
+document.addEventListener("DOMContentLoaded", async () => {
+  const params = new URLSearchParams(window.location.search);
+  const key = params.get("key");
+
+  if (!key) {
+    document.getElementById("message").textContent = "No payment confirmation key found.";
+    return;
+  }
+
+  try {
+    const res = await fetch(`https://cheese-backend-x01h.onrender.com/verify-key?key=${key}`);
+    const data = await res.json();
+
+    if (data.valid) {
+        const backendURL2 = "https://cheese-backend2.onrender.com/shipping";
+        const info = JSON.parse(localStorage.getItem("userInfo"));
+
+        const cart2 = JSON.parse(localStorage.getItem("cart"));
+        const itemIds = cart2.map(item => item.id);
+        const itams = itemIds.join(",");
+
+        const userData = {
+            name: info.name,
+            contact: info.contact,
+            itams: itams,
+            address: `${info.address.line1}, ${info.address.postcode}, ${info.address.country}`
+        };
+        
+        try {
+            const res2 = await fetch(backendURL2, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(userData)
+            });
+
+            const result = await res2.json();
+            console.log("User info saved:", result);
+        } catch (err) {
+            console.error("Error saving user info:", err);
+        }
+
+        document.getElementById("message").textContent = "Payment confirmed — you just paid!";
+        localStorage.removeItem("cart");
+    } else {
+        document.getElementById("message").textContent = "Error verifying payment. Contact us";
+    }
+  } catch (err) {
+        console.error(err);
+        document.getElementById("message").textContent = "Error verifying payment. Contact us";
+  }
+});
+
+
+    </script>
 </body>
 
 </html>

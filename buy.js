@@ -85,40 +85,6 @@ function ping(){
 
 async function buy() {
     const backendUrl = "https://cheese-backend-x01h.onrender.com";
-    const backendURL2 = "https://cheese-backend2.onrender.com/shipping";
-    const info = JSON.parse(localStorage.getItem("userInfo"));
-
-    if (!info || !info.name || !info.contact || !info.address) {
-        window.location.href = "personal_info.html";
-        return;
-    }
-
-    // --- Save personal info ---
-
-    const cart2 = JSON.parse(localStorage.getItem("cart"));
-    const itemIds = cart2.map(item => item.id);
-    const itams = itemIds.join(",");
-
-    const userData = {
-        name: info.name,
-        contact: info.contact,
-        itams: itams,
-        address: `${info.address.line1}, ${info.address.postcode}, ${info.address.country}`
-    };
-
-    try {
-        const res2 = await fetch(backendURL2, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(userData)
-        });
-
-        const result = await res2.json();
-        console.log("User info saved:", result);
-    } catch (err) {
-        console.error("Error saving user info:", err);
-    }
-
     const data2 = await cost();
     
     const cart = data2.items.map(item => ({
