@@ -88,9 +88,6 @@ footer {
 
 }
 
-
-
-
 input,
 select {
     width: 30%;
@@ -103,9 +100,9 @@ select {
 
 .container {
     width: 90%;
+    padding-bottom: 50px;
     max-width: 1200px;
     margin: 20px auto;
-
 }
 
 header h1 {
