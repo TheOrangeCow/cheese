@@ -1,7 +1,5 @@
-
-
-
-
+//Change this to your backend 1
+const backendUrl = "https://cheese-backend-x01h.onrender.com";
 function order(){
     window.location.href="buy.html"
 }
@@ -72,20 +70,8 @@ async function cost(){
     }
 }
 
-function ping(){
-    const backendUrl = "https://cheese-backend-x01h.onrender.com";
-    window.addEventListener("load", async () => {
-        try {
-            await fetch(`${backendUrl}/ping`);
-            console.log("Backend ping successful — service is awake.");
-        } catch (err) {
-            console.warn("Backend ping failed. Service may be asleep or unreachable.");
-        }
-    });
-}
 
 async function buy() {
-    const backendUrl = "https://cheese-backend-x01h.onrender.com";
     const data2 = await cost();
     
     const cart = data2.items.map(item => ({
@@ -119,3 +105,12 @@ async function buy() {
 
     
 }
+
+window.addEventListener("load", async () => {
+    try {
+        await fetch(`${backendUrl}/ping`);
+        console.log("Backend ping successful — service is awake.");
+    } catch (err) {
+        console.warn("Backend ping failed. Service may be asleep or unreachable.");
+    }
+});
