@@ -7,7 +7,7 @@ async function news() {
     };
 
     try {
-        const res2 = await fetch("${backendUrl2}/shipping", {
+        const res2 = await fetch(`${backendUrl2}/news`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(userData)
