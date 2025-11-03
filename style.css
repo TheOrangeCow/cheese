@@ -39,8 +39,6 @@ header {
     text-align: center;
     font-size: 32px;
     font-weight: bold;
-    position: sticky;
-    top: 0;
 }
 
 nav {
@@ -48,8 +46,6 @@ nav {
     padding: 15px;
     text-align: center;
     border-bottom: 1px solid var(--border-color);
-    position: sticky;
-    top: 0;
 }
 
 nav a {
