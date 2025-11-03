@@ -38,7 +38,7 @@
         <div class="basket" id="basket">
             <p>Loading your basket...</p>
         </div>
-        <button onclick="order()">Conform your order</button>
+        <button id ="order" onclick="order()" disabled>Conform your order</button>
     </div>
 
     <br>
@@ -67,6 +67,8 @@
             if (!data || data.error || !data.items || data.items.length === 0) {
                 container.innerHTML = '<p class="empty">Nothing in your basket</p>';
                 return;
+            }else{
+                document.getElementById("order").disabled = false;
             }
 
             data.items.forEach(item => {
