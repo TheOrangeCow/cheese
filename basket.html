@@ -123,7 +123,7 @@
                         if (cartItem) cartItem.quantity = newQty;
 
                         localStorage.setItem('cart', JSON.stringify(cart));
-                        loadBasket();
+                        dissply();
                     }, { once: true });
                 });
             });
@@ -134,7 +134,7 @@
                     const id = parseInt(e.target.dataset.id);
                     cart = cart.filter(i => i.id !== id);
                     localStorage.setItem('cart', JSON.stringify(cart));
-                    loadBasket();
+                    dissply();
                 });
             });
 
