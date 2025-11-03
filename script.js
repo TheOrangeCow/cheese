@@ -9,7 +9,7 @@ function checkScroll() {
 window.addEventListener('load', () => {
     setTimeout(() => {
         checkScroll()
-    }, 1000);
+    }, 500);
 });
 
 window.addEventListener('resize', checkScroll);
