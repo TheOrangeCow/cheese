@@ -1,9 +1,9 @@
+//Nothing in this file
 async function loadProducts(container, options = { featuredOnly: false, overrideProducts: null }) {
     const url = 'products.json';
     try {
         let products = await (await fetch(url)).json();
 
-        // If overrideProducts is provided, use it
         if (options.overrideProducts) {
             products = options.overrideProducts;
         } else if (options.featuredOnly) {
@@ -21,13 +21,11 @@ async function loadProducts(container, options = { featuredOnly: false, override
             productDiv.className = 'product';
             if (!product.in_stock) productDiv.classList.add('out-of-stock');
 
-            // Make the entire box clickable
             productDiv.style.cursor = 'pointer';
             productDiv.addEventListener('click', () => {
                 window.location.href = `product.html?id=${product.id}`;
             });
 
-            // Use first image if product.image is an array
             const displayImage = Array.isArray(product.image) ? product.image[0] : product.image;
 
             productDiv.innerHTML = `
@@ -41,12 +39,10 @@ async function loadProducts(container, options = { featuredOnly: false, override
 
             const button = productDiv.querySelector('button');
             button.addEventListener('click', (event) => {
-                event.stopPropagation(); // Prevent redirect
+                event.stopPropagation();
 
-                // Retrieve current cart from localStorage or start a new one
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-                // Check if product already in cart
                 const existingItem = cart.find(item => item.id === product.id);
                 if (existingItem) {
                     existingItem.quantity += 1;
@@ -54,7 +50,6 @@ async function loadProducts(container, options = { featuredOnly: false, override
                     cart.push({ id: product.id, quantity: 1 });
                 }
 
-                // Save updated cart
                 localStorage.setItem('cart', JSON.stringify(cart));
 
                 console.log(`${product.name} added to basket`);
@@ -63,10 +58,7 @@ async function loadProducts(container, options = { featuredOnly: false, override
 
             });
 
-
             container.appendChild(productDiv);
-            
-
 
         });
 

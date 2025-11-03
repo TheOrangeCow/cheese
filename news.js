@@ -1,3 +1,4 @@
+//Change this to your backend
 const backendUrl2 = "https://cheese-backend2.onrender.com";
 async function news() {
     const info = document.getElementById("newsletter-email");
