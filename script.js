@@ -7,9 +7,9 @@ function checkScroll() {
   }
 }
 window.addEventListener('load', () => {
-    requestAnimationFrame(() => {
-        checkScroll();
-    });
+    setTimeout(() => {
+        checkScroll()
+    }, 1000);
 });
 
 window.addEventListener('resize', checkScroll);
